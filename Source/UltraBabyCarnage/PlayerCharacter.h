@@ -3,10 +3,15 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "IDamageable.h"
+#include "UBCItem.h"
+#include "UBCPunchItem.h"
 #include "PlayerCharacter.generated.h"
 
 UCLASS()
-class ULTRABABYCARNAGE_API APlayerCharacter : public ACharacter
+class ULTRABABYCARNAGE_API APlayerCharacter : 
+	public ACharacter,
+	public IDamageable
 {
 GENERATED_BODY()
 
@@ -17,7 +22,16 @@ public:
 
 protected:
 
-	//UPROPERTY(NoExport)
+	UPROPERTY(EditAnywhere)
+	float maxHealth;
+
+	UPROPERTY(EditAnywhere)
+	float currentHealth;
+
+	UBCItem* leftItem;
+
+	UBCItem* rightItem;
+
 	TArray<AActor*> overlappingActors;
 
 	// Called when the game starts or when spawned
@@ -30,19 +44,15 @@ protected:
 	void MoveRight(float value);
 
 	UFUNCTION()
-	void Attack();
+	void LeftAttack();	
+	
+	UFUNCTION()
+	void RightAttack();
 
 	UFUNCTION()
 	void CameraLook();
 
 public:	
-
-	//UPROPERTY(VisibleAnywhere)
-	UPROPERTY(EditAnywhere)
-	float maxHealth;
-
-	UPROPERTY(EditAnywhere)
-	float health;
 
 	UPROPERTY(EditAnywhere)
 	float attackRange;
@@ -61,5 +71,7 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+	virtual bool TakeDamage(const int& damage) override;
 
 };

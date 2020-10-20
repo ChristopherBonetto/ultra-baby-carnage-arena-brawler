@@ -1,4 +1,7 @@
 
+#include <cstdlib>
+#include <string>
+
 #include "Kismet/KismetMathLibrary.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/SphereComponent.h"
@@ -33,6 +36,10 @@ APlayerCharacter::APlayerCharacter()
 		camera->SetUsingAbsoluteLocation(true);
 		camera->SetUsingAbsoluteRotation(true);
 	}
+
+	leftItem = new UBCPunchItem();
+	
+	rightItem = new UBCPunchItem();
 }
 
 // Called when the game starts or when spawned
@@ -56,14 +63,32 @@ void APlayerCharacter::MoveRight(float value)
 	AddMovementInput(direction, value);
 }
 
-void APlayerCharacter::Attack()
+void APlayerCharacter::LeftAttack()
 {
-	overlapSphere->GetOverlappingActors(overlappingActors);
-	for (auto i : overlappingActors)
+	if (leftItem)
 	{
-		if (i->GetClass()->IsChildOf(AEnemyController::StaticClass()))
+		overlapSphere->GetOverlappingActors(overlappingActors);
+		for (auto i : overlappingActors)
 		{
-			((AEnemyController*)i)->TakeDamage(1);
+			if (i->GetClass()->IsChildOf(AEnemyController::StaticClass()))
+			{
+				leftItem->Attack(((AEnemyController*)i));
+			}
+		}
+	}
+}
+
+void APlayerCharacter::RightAttack()
+{
+	if (rightItem)
+	{
+		overlapSphere->GetOverlappingActors(overlappingActors);
+		for (auto i : overlappingActors)
+		{
+			if (i->GetClass()->IsChildOf(AEnemyController::StaticClass()))
+			{
+				rightItem->Attack(((AEnemyController*)i));
+			}
 		}
 	}
 }
@@ -97,6 +122,24 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	PlayerInputComponent->BindAxis("Horizontal", this, &APlayerCharacter::MoveRight);
 
 	// Attack bindings.
-	PlayerInputComponent->BindAction("Attack", IE_Pressed, this, &APlayerCharacter::Attack);
+	PlayerInputComponent->BindAction("Attack_L", IE_Pressed, this, &APlayerCharacter::LeftAttack);
+	PlayerInputComponent->BindAction("Attack_R", IE_Pressed, this, &APlayerCharacter::RightAttack);
 }
 
+bool APlayerCharacter::TakeDamage(const int& damage)
+{
+	currentHealth = std::max(0, (int)currentHealth - damage);
+
+	if (GEngine)
+	{
+		std::string s = std::to_string(currentHealth);
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, s.c_str());
+	}
+
+	if (currentHealth == 0u)
+	{
+		return true;
+	}
+
+	return false;
+}

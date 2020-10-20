@@ -4,18 +4,28 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "IDamageable.h"
 #include "EnemyController.generated.h"
 
 UCLASS()
-class ULTRABABYCARNAGE_API AEnemyController : public AActor
+class ULTRABABYCARNAGE_API AEnemyController : 
+	public AActor,
+	public IDamageable
 {
 	GENERATED_BODY()
 	
 public:	
+
 	// Sets default values for this actor's properties
 	AEnemyController();
 
 protected:
+
+	UPROPERTY(EditAnywhere)
+	unsigned int maxHealth;
+
+	UPROPERTY(EditAnywhere)
+	unsigned int currentHealth;
 
 	UPROPERTY(VisibleAnywhere)
 	USkeletalMeshComponent* mesh;
@@ -28,6 +38,10 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	void TakeDamage(int damage);
+	UFUNCTION()
+	unsigned int GetHealth() const;
+
+	UFUNCTION()
+	virtual bool TakeDamage(const int& damage) override;
 
 };

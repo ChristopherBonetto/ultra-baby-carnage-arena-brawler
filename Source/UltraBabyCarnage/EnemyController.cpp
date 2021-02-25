@@ -1,9 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
+#include "EnemyController.h"
 #include <cstdlib>
 #include <string>
 #include "Components/SkeletalMeshComponent.h"
-#include "EnemyController.h"
 
 // Sets default values
 AEnemyController::AEnemyController()

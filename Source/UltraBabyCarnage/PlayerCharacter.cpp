@@ -2,12 +2,12 @@
 #include <cstdlib>
 #include <string>
 
+#include "PlayerCharacter.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/SphereComponent.h"
 #include "Camera/CameraComponent.h"
 #include "EnemyController.h"
-#include "PlayerCharacter.h"
 
 // Sets default values
 APlayerCharacter::APlayerCharacter()

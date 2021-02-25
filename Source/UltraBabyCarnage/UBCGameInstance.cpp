@@ -1,15 +1,20 @@
 
-#include "Kismet/GameplayStatics.h"
 #include "UBCGameInstance.h"
+#include "Kismet/GameplayStatics.h"
 
 UUBCGameInstance::UUBCGameInstance()
 {
-	for (TPair<TSubclassOf<AActor>, AActor*> pair : singletons)
+}
+
+void UUBCGameInstance::Init()
+{
+	for (TPair<TSubclassOf<AActor>, AActor*> &pair : singletons)
 	{
 		// If the instance of the class is not valid, a new instance is made.
 		if (!pair.Value->IsValidLowLevel())
 		{
 			pair.Value = CreateInstance(pair.Key);
+			//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, pair.Key->GetName() + " -> " + pair.Value->GetName());
 		}
 	}
 }

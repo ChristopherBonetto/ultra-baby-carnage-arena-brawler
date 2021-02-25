@@ -22,6 +22,7 @@ public:
 	*/
 
 	UUBCGameInstance();
+	virtual void Init() override;
 
 protected:
 

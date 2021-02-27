@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Curves/CurveFloat.h"
+#include "UBCCharacter.h"
 #include "UBCWaveInfo.generated.h"
 
 /**
@@ -65,6 +66,6 @@ public:
 	*/
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	TSubclassOf<AActor> enemyToSpawn;
+	TSubclassOf<AUBCCharacter> enemyToSpawn;
 
 };

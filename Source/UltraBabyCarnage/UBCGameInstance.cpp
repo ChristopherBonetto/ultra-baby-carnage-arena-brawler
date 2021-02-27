@@ -47,9 +47,11 @@ bool UUBCGameInstance::IsSingleton(TSubclassOf<AActor> actorClass) const
 	return singletons.Contains(actorClass);
 }
 
-AActor* UUBCGameInstance::GetInstanceOf(TSubclassOf<AActor> actorClass) const
+AActor* UUBCGameInstance::GetInstanceOf(TSubclassOf<AActor> actorClass, bool& outInstanceFound) const
 {
-	return singletons[actorClass];
+	AActor* instance = singletons[actorClass];
+	outInstanceFound = instance->IsValidLowLevel();
+	return instance;
 }
 
 bool UUBCGameInstance::RemoveInstance(TSubclassOf<AActor> actorClass, bool destroyActor)

@@ -63,7 +63,7 @@ public:
 	*/
 
 	UFUNCTION(BlueprintCallable, Category = Singleton, meta = (DeterminesOutputType = "actorClass"))
-	AActor* GetInstanceOf(TSubclassOf<AActor> actorClass) const;
+	AActor* GetInstanceOf(TSubclassOf<AActor> actorClass, bool& outInstanceFound) const;
 
 	/**
 	* Removes the instance of the specified actor class and returns whether the instance could be removed.

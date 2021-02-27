@@ -116,21 +116,21 @@ protected:
 	*/
 
 	UFUNCTION(BlueprintNativeEvent)
-	void OnInteractableFound_Event(AActor* interactable);
+	void OnInteractableFound(AActor* interactable);
 
 	/**
 	* Event called when an interaction is made.
 	*/
 
 	UFUNCTION(BlueprintNativeEvent)
-	void OnInteraction_Event(AActor* interactable);
+	void OnInteraction(AActor* interactable);
 
 	/**
 	* Event called when an interaction is no longer detected.
 	*/
 
 	UFUNCTION(BlueprintNativeEvent)
-	void OnInteractableLost_Event();
+	void OnInteractableLost();
 
 	/**
 	* Checks for interactables at the specified position and direction.

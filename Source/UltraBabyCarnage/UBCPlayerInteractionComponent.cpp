@@ -10,20 +10,20 @@
 UUBCPlayerInteractionComponent::UUBCPlayerInteractionComponent()
 {
 	PrimaryComponentTick.bCanEverTick = true;
-	interactablesFound.AddDynamic(this, &UUBCPlayerInteractionComponent::OnInteractableFound_Event);
-	interaction.AddDynamic(this, &UUBCPlayerInteractionComponent::OnInteraction_Event);
-	interactableLost.AddDynamic(this, &UUBCPlayerInteractionComponent::OnInteractableLost_Event);
+	interactablesFound.AddDynamic(this, &UUBCPlayerInteractionComponent::OnInteractableFound);
+	interaction.AddDynamic(this, &UUBCPlayerInteractionComponent::OnInteraction);
+	interactableLost.AddDynamic(this, &UUBCPlayerInteractionComponent::OnInteractableLost);
 }
 
-void UUBCPlayerInteractionComponent::OnInteractableFound_Event_Implementation(AActor* interactable)
+void UUBCPlayerInteractionComponent::OnInteractableFound_Implementation(AActor* interactable)
 {
 }
 
-void UUBCPlayerInteractionComponent::OnInteraction_Event_Implementation(AActor* interactable)
+void UUBCPlayerInteractionComponent::OnInteraction_Implementation(AActor* interactable)
 {
 }
 
-void UUBCPlayerInteractionComponent::OnInteractableLost_Event_Implementation()
+void UUBCPlayerInteractionComponent::OnInteractableLost_Implementation()
 {
 }
 

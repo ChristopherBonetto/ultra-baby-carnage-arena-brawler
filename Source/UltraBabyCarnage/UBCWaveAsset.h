@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Engine/DataAsset.h"
+#include "UBCCharacter.h"
 #include "UBCWaveInfo.h"
 #include "UBCWaveAsset.generated.h"
 
@@ -56,7 +57,7 @@ public:
 	int GetRoundBatchSize(int round) const;
 
 	UFUNCTION(BlueprintCallable)
-	TSubclassOf<AActor> GetEnemyClass() const;
+	TSubclassOf<AUBCCharacter> GetEnemyClass() const;
 
 	UFUNCTION(BlueprintCallable)
 	int GetEnemyMultiplier() const;

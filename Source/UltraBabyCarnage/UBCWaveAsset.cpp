@@ -25,7 +25,7 @@ UCurveFloat* UUBCWaveAsset::GetSpawnCurve() const
 
 int UUBCWaveAsset::GetRoundSpawnCount(int round) const
 {
-	return (int)GetSpawnCurve()->GetFloatValue(round);
+	return (int)GetSpawnCurve()->GetFloatValue(round) * GetEnemyMultiplier();
 }
 
 UCurveFloat* UUBCWaveAsset::GetSpawnDelayCurve() const
@@ -48,7 +48,7 @@ int UUBCWaveAsset::GetRoundBatchSize(int round) const
 	return (int)GetSpawnBatchCurve()->GetFloatValue(round);
 }
 
-TSubclassOf<AActor> UUBCWaveAsset::GetEnemyClass() const
+TSubclassOf<AUBCCharacter> UUBCWaveAsset::GetEnemyClass() const
 {
 	return info.enemyToSpawn;
 }

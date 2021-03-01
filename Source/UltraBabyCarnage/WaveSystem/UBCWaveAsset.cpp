@@ -1,7 +1,12 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 
 #include "UBCWaveAsset.h"
+
+float UUBCWaveAsset::GetCurveValue(UCurveFloat* curve, int round)
+{
+	return curve->IsValidLowLevelFast() ?
+		curve->GetFloatValue(round) :
+		0.f;
+}
 
 float UUBCWaveAsset::GetRoundDelay() const
 {
@@ -25,7 +30,7 @@ UCurveFloat* UUBCWaveAsset::GetSpawnCurve() const
 
 int UUBCWaveAsset::GetRoundSpawnCount(int round) const
 {
-	return (int)GetSpawnCurve()->GetFloatValue(round) * GetEnemyMultiplier();
+	return (int)GetCurveValue(GetSpawnCurve(), round);
 }
 
 UCurveFloat* UUBCWaveAsset::GetSpawnDelayCurve() const
@@ -35,7 +40,7 @@ UCurveFloat* UUBCWaveAsset::GetSpawnDelayCurve() const
 
 float UUBCWaveAsset::GetRoundSpawnDelay(int round) const
 {
-	return (int)GetSpawnDelayCurve()->GetFloatValue(round);
+	return GetCurveValue(GetSpawnDelayCurve(), round);
 }
 
 UCurveFloat* UUBCWaveAsset::GetSpawnBatchCurve() const
@@ -45,7 +50,27 @@ UCurveFloat* UUBCWaveAsset::GetSpawnBatchCurve() const
 
 int UUBCWaveAsset::GetRoundBatchSize(int round) const
 {
-	return (int)GetSpawnBatchCurve()->GetFloatValue(round);
+	return GetCurveValue(GetSpawnBatchCurve(), round);
+}
+
+UCurveFloat* UUBCWaveAsset::GetHealthCurve() const
+{
+	return info.enemyHealthCurve;
+}
+
+int UUBCWaveAsset::GetRoundHealthValue(int round) const
+{
+	return GetCurveValue(GetHealthCurve(), round);
+}
+
+UCurveFloat* UUBCWaveAsset::GetPowerCurve() const
+{
+	return info.enemyPowerCurve;
+}
+
+int UUBCWaveAsset::GetRoundPowerValue(int round) const
+{
+	return GetCurveValue(GetPowerCurve(), round);
 }
 
 TSubclassOf<AUBCCharacter> UUBCWaveAsset::GetEnemyClass() const

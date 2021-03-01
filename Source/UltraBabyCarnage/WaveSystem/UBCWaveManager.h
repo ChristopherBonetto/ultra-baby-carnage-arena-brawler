@@ -3,7 +3,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "UBCCharacter.h"
+#include "../UBCCharacter.h"
 #include "UBCWaveAsset.h"
 #include "UBCWaveManager.generated.h"
 

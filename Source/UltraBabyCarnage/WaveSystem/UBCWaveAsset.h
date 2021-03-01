@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Engine/DataAsset.h"
-#include "UBCCharacter.h"
+#include "../UBCCharacter.h"
 #include "UBCWaveInfo.h"
 #include "UBCWaveAsset.generated.h"
 
@@ -13,7 +13,8 @@
  */
 
 UCLASS()
-class ULTRABABYCARNAGE_API UUBCWaveAsset : public UPrimaryDataAsset
+class ULTRABABYCARNAGE_API UUBCWaveAsset : 
+	public UPrimaryDataAsset
 {
 	GENERATED_BODY()
 
@@ -21,6 +22,10 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FUBCWaveInfo info;
+
+protected:
+
+	static float GetCurveValue(UCurveFloat* curve, int round);
 
 public:
 
@@ -30,6 +35,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	float GetRoundDelay() const;
+
+	UFUNCTION(BlueprintCallable)
+	int GetEnemyMultiplier() const;
 
 	/**
 	* Returns the maximum number of active enemies at the same time.
@@ -57,9 +65,18 @@ public:
 	int GetRoundBatchSize(int round) const;
 
 	UFUNCTION(BlueprintCallable)
-	TSubclassOf<AUBCCharacter> GetEnemyClass() const;
+	UCurveFloat* GetHealthCurve() const;
 
 	UFUNCTION(BlueprintCallable)
-	int GetEnemyMultiplier() const;
+	int GetRoundHealthValue(int round) const;
+
+	UFUNCTION(BlueprintCallable)
+	UCurveFloat* GetPowerCurve() const;
+
+	UFUNCTION(BlueprintCallable)
+	int GetRoundPowerValue(int round) const;
+
+	UFUNCTION(BlueprintCallable)
+	TSubclassOf<AUBCCharacter> GetEnemyClass() const;
 
 };

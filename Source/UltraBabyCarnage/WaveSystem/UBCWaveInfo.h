@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Curves/CurveFloat.h"
-#include "UBCCharacter.h"
+#include "../UBCCharacter.h"
 #include "UBCWaveInfo.generated.h"
 
 /**
@@ -60,6 +60,20 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UCurveFloat* enemySpawnBatchCurve;
+
+	/**
+	* Curve that indicates how many enemies should be spawned at the same time per round.
+	*/
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UCurveFloat* enemyHealthCurve;
+
+	/**
+	* Curve that indicates how many enemies should be spawned at the same time per round.
+	*/
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UCurveFloat* enemyPowerCurve;
 
 	/**
 	* Class of the enemy that will be spawned.

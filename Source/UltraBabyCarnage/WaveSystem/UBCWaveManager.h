@@ -4,6 +4,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "../UBCCharacter.h"
+#include "../Items/UBCItemBase.h"
 #include "UBCWaveAsset.h"
 #include "UBCWaveManager.generated.h"
 
@@ -79,6 +80,7 @@ protected:
 
 	UPROPERTY(BlueprintReadWrite, Category = "Wave: Round")
 	int currentRound = 1;
+
 	/**
 	* The timer that handles the start of the next round.
 	*/
@@ -138,6 +140,30 @@ protected:
 
 	UPROPERTY(BlueprintReadWrite, Category = "Wave: Spawn")
 	int enemyBatchSize;
+
+	/**
+	* The item budget of the round.
+	*/
+
+	UPROPERTY(BlueprintReadWrite, Category = "Wave: Spawn")
+	int roundBudget;
+
+	/**
+	* The current budget multiplier.
+	*/
+
+	UPROPERTY(BlueprintReadWrite, Category = "Wave: Spawn")
+	int roundBudgetMultiplier;
+
+	/**
+	* Items that will be used this round.
+	*/
+
+	//UPROPERTY(BlueprintReadWrite, Category = "Wave: Spawn")
+	TArray<TPair<TSubclassOf<AUBCItemBase>, int>> roundItems;
+
+	UPROPERTY(BlueprintReadWrite, Category = "Wave: Spawn")
+	TSubclassOf<AUBCItemBase> defaultItemClass;
 
 	/**
 	* The timer that handles spawnings.
@@ -290,6 +316,13 @@ protected:
 	void StartRound();
 	
 	/**
+	* Returns the item that the newly spawned enemy should equip.
+	*/
+
+	UFUNCTION(BlueprintCallable, Category = "Wave: Spawn")
+	AUBCItemBase* GetItemToEquip();
+	
+	/**
 	* Spawns an enemy to any of the spawner.
 	*/
 
@@ -324,6 +357,8 @@ protected:
 
 	UFUNCTION(BlueprintCallable, Category = "Wave: Spawn")
 	int GetCutoffLength() const;
+
+	void CreateRoundItemList();
 
 #pragma region Events implementations
 

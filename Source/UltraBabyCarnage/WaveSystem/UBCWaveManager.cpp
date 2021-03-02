@@ -2,6 +2,8 @@
 #include "UBCWaveManager.h"
 #include <iostream>
 #include <string>
+#include "Kismet/KismetMathLibrary.h"
+#include "UBCWeaponCost.h"
 
 AUBCWaveManager::AUBCWaveManager()
 {
@@ -41,6 +43,47 @@ void AUBCWaveManager::StartRound()
 	roundStart.Broadcast();
 }
 
+AUBCItemBase* AUBCWaveManager::GetItemToEquip()
+{
+	int itemCount = roundItems.Num();
+
+	TSubclassOf<AUBCItemBase> itemClass;
+	// If there are still items in the list, a random item is selected and its amount decreased.
+	if (itemCount > 0)
+	{
+		int itemIndex = FMath::RandRange(0, itemCount - 1);
+
+		itemClass = roundItems[itemIndex].Key;
+		//roundItems[itemIndex].Value--;
+		
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Cyan, FString::FromInt(roundItems[itemIndex].Value - 1));
+
+		// If the amount of the items is now less or equal to 0, it is removed from the list.
+		if (--roundItems[itemIndex].Value <= 0)
+		{
+			roundItems.RemoveAt(itemIndex);
+		}
+	}
+	// Else the default item is selected.
+	else
+	{
+		itemClass = defaultItemClass;
+	}
+
+	if (itemClass)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Cyan, itemClass.Get()->GetName());
+
+		FActorSpawnParameters spawnParams;
+		spawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+
+		// The item is spawned.
+		return (AUBCItemBase*)GetWorld()->SpawnActor(itemClass);
+	}
+
+	return nullptr;
+}
+
 void AUBCWaveManager::SpawnEnemy()
 {
 	// Sorts the spawn points.
@@ -59,6 +102,13 @@ void AUBCWaveManager::SpawnEnemy()
 
 	currentEnemyCount++;
 	spawnedEnemyCount++;
+
+	// Spawns and attaches the item to the actor.
+	//AUBCItemBase* item = GetItemToEquip();
+	//if (item->IsValidLowLevelFast())
+	//{
+	//	item->AttachToActor(enemy, FAttachmentTransformRules::KeepRelativeTransform, "LeftHandSocket");
+	//}
 
 	// Binds to the death event of the enemy.
 	enemy->death.AddDynamic(this, &AUBCWaveManager::OnEnemyDeath);
@@ -149,8 +199,82 @@ void AUBCWaveManager::OnWaveStart_Implementation()
 	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Cyan, TEXT("Wave started"));
 	// Retrieves the max active enemies count from the wave asset.
 	maxActiveEnemiesCount = wave->GetMaxActiveEnemiesCount();
+
+	roundBudgetMultiplier = wave->GetMinBudgetMultiplier();
+
 	// Starts the round.
 	roundStart.Broadcast();
+}
+
+void AUBCWaveManager::CreateRoundItemList()
+{
+	// Calculates the budget of the round.
+	roundBudget = wave->GetBaseBudget() * roundBudgetMultiplier;
+
+	UDataTable* itemTable = wave->GetItemCostTable();
+
+	FString contextString;
+
+	// Finds all the names of the items in the table.
+	TArray<FName> rowNames;
+	rowNames = itemTable->GetRowNames();
+
+	int itemCount = rowNames.Num();
+
+	// Finds the first and last indeces of the iteration.
+	int last = FMath::Clamp(wave->GetRoundMaxItemIndex(currentRound), 0, itemCount - 1);
+	int first = FMath::Clamp(wave->GetRoundItemIndexOffset(currentRound), 0, last);
+
+	// Retrieves the default item class of the round.
+	int defaultIndex = wave->GetRoundDefaultItemIndex(currentRound);
+	defaultItemClass = FMath::IsWithin(defaultIndex, 0, itemCount) ? 
+		itemTable->FindRow<FUBCWeaponCost>(rowNames[defaultIndex], contextString)->weaponClass :
+		nullptr;
+
+	for (int i = last; i >= first; i--)
+	{
+		FUBCWeaponCost* row = itemTable->FindRow<FUBCWeaponCost>(rowNames[i], contextString);
+		if (row)
+		{
+			int cost = row->cost;
+
+			// Adds to the item list the class and amount to buy.
+			int amountToBuy = FMath::RandRange(0, roundBudget / cost);
+			roundItems.Add(TPair<TSubclassOf<AUBCItemBase>, int>(row->weaponClass, amountToBuy));
+			
+			// Deducts the cost from the budget.
+			roundBudget -= cost * amountToBuy;
+
+			// If the budget is 0, no other items are bought.
+			if (roundBudget <= 0)
+			{
+				break;
+			}
+		}
+	}
+
+	// If there's still budget left, it is all spent on copies of the first item.
+	if (roundBudget > 0)
+	{
+		FUBCWeaponCost* row = itemTable->FindRow<FUBCWeaponCost>(rowNames[first], contextString);
+		if (row->cost <= roundBudget)
+		{
+			int amount = roundBudget / row->cost;
+			roundItems[last].Value += amount;
+			roundBudget -= amount * row->cost;
+		}
+	}
+
+#if WITH_EDITOR
+
+	for (auto i : roundItems)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Cyan, i.Key.Get()->GetName() + " : " + FString::FromInt(i.Value));
+	}
+
+#endif
+
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Cyan, FString::FromInt(roundBudget));
 }
 
 void AUBCWaveManager::OnRoundStart_Implementation() 
@@ -166,6 +290,9 @@ void AUBCWaveManager::OnRoundStart_Implementation()
 	// If the enemy count is greater than 0, the round is actually started, else it is ended.
 	if (roundEnemyCount > 0)
 	{
+		// Updates the item list of the round.
+		CreateRoundItemList();
+
 		currentEnemyCount = spawnedEnemyCount = 0;
 		enemyBatchSize = wave->GetRoundBatchSize(currentRound);
 		GetWorldTimerManager().SetTimer(enemySpawnTimer, this, &AUBCWaveManager::SpawnEnemies, wave->GetRoundSpawnDelay(currentRound), true);
@@ -197,6 +324,8 @@ void AUBCWaveManager::OnRoundDone_Implementation()
 	// The tick of the round is stopped.
 	GetWorldTimerManager().ClearTimer(roundUpdateTimer);
 	
+	roundBudgetMultiplier *= 2;
+
 	// If the wave should end, it is ended.
 	if (ShouldWaveEnd())
 	{

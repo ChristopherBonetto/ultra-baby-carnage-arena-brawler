@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Engine/DataAsset.h"
+#include "Engine/DataTable.h"
 #include "../UBCCharacter.h"
 #include "UBCWaveInfo.h"
 #include "UBCWaveAsset.generated.h"
@@ -75,6 +76,36 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	int GetRoundPowerValue(int round) const;
+
+	UFUNCTION(BlueprintCallable)
+	int GetBaseBudget() const;
+
+	UFUNCTION(BlueprintCallable)
+	int GetMinBudgetMultiplier() const;
+
+	UFUNCTION(BlueprintCallable)
+	int GetMaxBudgetMultiplier() const;
+
+	UFUNCTION(BlueprintCallable)
+	UDataTable* GetItemCostTable() const;
+
+	UFUNCTION(BlueprintCallable)
+	UCurveFloat* GetItemIndexOffsetCurve() const;
+
+	UFUNCTION(BlueprintCallable)
+	int GetRoundItemIndexOffset(int round) const;
+
+	UFUNCTION(BlueprintCallable)
+	UCurveFloat* GetMaxItemIndexCurve() const;
+
+	UFUNCTION(BlueprintCallable)
+	int GetRoundMaxItemIndex(int round) const;
+
+	UFUNCTION(BlueprintCallable)
+	UCurveFloat* GetDefaultItemIndexCurve() const;
+
+	UFUNCTION(BlueprintCallable)
+	int GetRoundDefaultItemIndex(int round) const;
 
 	UFUNCTION(BlueprintCallable)
 	TSubclassOf<AUBCCharacter> GetEnemyClass() const;

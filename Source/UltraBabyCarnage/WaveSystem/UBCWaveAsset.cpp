@@ -60,7 +60,7 @@ UCurveFloat* UUBCWaveAsset::GetHealthCurve() const
 
 int UUBCWaveAsset::GetRoundHealthValue(int round) const
 {
-	return GetCurveValue(GetHealthCurve(), round);
+	return (int)GetCurveValue(GetHealthCurve(), round);
 }
 
 UCurveFloat* UUBCWaveAsset::GetPowerCurve() const
@@ -70,7 +70,57 @@ UCurveFloat* UUBCWaveAsset::GetPowerCurve() const
 
 int UUBCWaveAsset::GetRoundPowerValue(int round) const
 {
-	return GetCurveValue(GetPowerCurve(), round);
+	return (int)GetCurveValue(GetPowerCurve(), round);
+}
+
+int UUBCWaveAsset::GetBaseBudget() const
+{
+	return info.baseBudget;
+}
+
+int UUBCWaveAsset::GetMinBudgetMultiplier() const
+{
+	return info.minBudgetMultiplier;
+}
+
+int UUBCWaveAsset::GetMaxBudgetMultiplier() const
+{
+	return info.maxBudgetMultiplier;
+}
+
+UDataTable * UUBCWaveAsset::GetItemCostTable() const
+{
+	return info.itemCostTable;
+}
+
+UCurveFloat * UUBCWaveAsset::GetItemIndexOffsetCurve() const
+{
+	return info.itemIndexOffsetCurve;
+}
+
+int UUBCWaveAsset::GetRoundItemIndexOffset(int round) const
+{
+	return (int)GetCurveValue(GetItemIndexOffsetCurve(), round);
+}
+
+UCurveFloat * UUBCWaveAsset::GetMaxItemIndexCurve() const
+{
+	return info.maxItemIndexCurve;
+}
+
+int UUBCWaveAsset::GetRoundMaxItemIndex(int round) const
+{
+	return (int)GetCurveValue(GetMaxItemIndexCurve(), round);
+}
+
+UCurveFloat * UUBCWaveAsset::GetDefaultItemIndexCurve() const
+{
+	return info.defaultItemIndexCurve;
+}
+
+int UUBCWaveAsset::GetRoundDefaultItemIndex(int round) const
+{
+	return GetCurveValue(GetDefaultItemIndexCurve(), round);
 }
 
 TSubclassOf<AUBCCharacter> UUBCWaveAsset::GetEnemyClass() const

@@ -5,7 +5,7 @@
 #include "GameFramework/Actor.h"
 #include "UBCItemBase.generated.h"
 
-UCLASS()
+UCLASS(Blueprintable)
 class ULTRABABYCARNAGE_API AUBCItemBase : 
 	public AActor
 {

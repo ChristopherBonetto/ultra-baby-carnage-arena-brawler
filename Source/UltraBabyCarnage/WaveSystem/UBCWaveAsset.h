@@ -87,7 +87,13 @@ public:
 	int GetMaxBudgetMultiplier() const;
 
 	UFUNCTION(BlueprintCallable)
-	UDataTable* GetItemCostTable() const;
+	UCurveFloat* GetTierCurve() const;
+
+	UFUNCTION(BlueprintCallable)
+	int GetRoundTier(int round) const;
+
+	UFUNCTION(BlueprintCallable)
+	UDataTable* GetItemCostTableOfTier(int tier) const;
 
 	UFUNCTION(BlueprintCallable)
 	UCurveFloat* GetItemIndexOffsetCurve() const;

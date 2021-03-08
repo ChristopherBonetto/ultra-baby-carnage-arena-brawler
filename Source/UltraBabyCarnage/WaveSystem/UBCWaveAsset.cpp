@@ -88,9 +88,22 @@ int UUBCWaveAsset::GetMaxBudgetMultiplier() const
 	return info.maxBudgetMultiplier;
 }
 
-UDataTable * UUBCWaveAsset::GetItemCostTable() const
+UCurveFloat * UUBCWaveAsset::GetTierCurve() const
 {
-	return info.itemCostTable;
+	return info.itemTierCurve;
+}
+
+int UUBCWaveAsset::GetRoundTier(int round) const
+{
+	return (int)GetCurveValue(GetTierCurve(), round);
+}
+
+UDataTable * UUBCWaveAsset::GetItemCostTableOfTier(int tier) const
+{
+	int tierCount = info.itemTierTables.Num();
+	return FMath::IsWithin(tier, 0, tierCount) ? 
+		info.itemTierTables[tier] : 
+		nullptr;
 }
 
 UCurveFloat * UUBCWaveAsset::GetItemIndexOffsetCurve() const

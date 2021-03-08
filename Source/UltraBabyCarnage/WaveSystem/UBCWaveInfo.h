@@ -102,7 +102,7 @@ public:
 	*/
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	UDataTable* itemCostTable;
+	TArray<UDataTable*> itemTierTables;
 
 	/**
 	* Curve that indicates the start index of the items that will be considered in the table.
@@ -124,6 +124,13 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UCurveFloat* defaultItemIndexCurve;
+
+	/**
+	* Curve that indicates the tier table to use for each round.
+	*/
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UCurveFloat* itemTierCurve;
 
 	/**
 	* Class of the enemy that will be spawned.

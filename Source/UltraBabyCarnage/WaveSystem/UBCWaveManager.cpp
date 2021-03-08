@@ -211,7 +211,8 @@ void AUBCWaveManager::CreateRoundItemList()
 	// Calculates the budget of the round.
 	roundBudget = wave->GetBaseBudget() * roundBudgetMultiplier;
 
-	UDataTable* itemTable = wave->GetItemCostTable();
+	//UDataTable* itemTable = wave->GetItemCostTableOfTier();
+	UDataTable* itemTable = wave->GetItemCostTableOfTier(wave->GetRoundTier(currentRound));
 
 	FString contextString;
 
@@ -222,8 +223,10 @@ void AUBCWaveManager::CreateRoundItemList()
 	int itemCount = rowNames.Num();
 
 	// Finds the first and last indeces of the iteration.
-	int last = FMath::Clamp(wave->GetRoundMaxItemIndex(currentRound), 0, itemCount - 1);
-	int first = FMath::Clamp(wave->GetRoundItemIndexOffset(currentRound), 0, last);
+	//int last = FMath::Clamp(wave->GetRoundMaxItemIndex(currentRound), 0, itemCount - 1);
+	//int first = FMath::Clamp(wave->GetRoundItemIndexOffset(currentRound), 0, last);	
+	int last = itemCount - 1;
+	int first = 0;
 
 	// Retrieves the default item class of the round.
 	int defaultIndex = wave->GetRoundDefaultItemIndex(currentRound);

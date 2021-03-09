@@ -55,7 +55,7 @@ AUBCItemBase* AUBCWaveManager::GetItemToEquip()
 
 		itemClass = roundItems[itemIndex].Key;
 		//roundItems[itemIndex].Value--;
-		
+
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Cyan, FString::FromInt(roundItems[itemIndex].Value - 1));
 
 		// If the amount of the items is now less or equal to 0, it is removed from the list.
@@ -200,7 +200,7 @@ void AUBCWaveManager::OnWaveStart_Implementation()
 	// Retrieves the max active enemies count from the wave asset.
 	maxActiveEnemiesCount = wave->GetMaxActiveEnemiesCount();
 
-	roundBudgetMultiplier = wave->GetMinBudgetMultiplier();
+	//roundBudgetMultiplier = wave->GetMinBudgetMultiplier();
 
 	// Starts the round.
 	roundStart.Broadcast();
@@ -208,6 +208,8 @@ void AUBCWaveManager::OnWaveStart_Implementation()
 
 void AUBCWaveManager::CreateRoundItemList()
 {
+	roundBudgetMultiplier = wave->GetRoundBudgetMultiplier(currentRound);
+
 	// Calculates the budget of the round.
 	roundBudget = wave->GetBaseBudget() * roundBudgetMultiplier;
 
@@ -327,7 +329,7 @@ void AUBCWaveManager::OnRoundDone_Implementation()
 	// The tick of the round is stopped.
 	GetWorldTimerManager().ClearTimer(roundUpdateTimer);
 	
-	roundBudgetMultiplier *= 2;
+	//roundBudgetMultiplier *= 2;
 
 	// If the wave should end, it is ended.
 	if (ShouldWaveEnd())

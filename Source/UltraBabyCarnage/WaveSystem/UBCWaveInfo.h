@@ -6,6 +6,7 @@
 #include "Curves/CurveFloat.h"
 #include "Engine/DataTable.h"
 #include "../UBCCharacter.h"
+#include "Evaluator.h"
 #include "UBCWaveInfo.generated.h"
 
 /**
@@ -45,36 +46,51 @@ public:
 	* Curve that indicates how many enemies should be spawned per round.
 	*/
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(/*EditAnywhere, */BlueprintReadWrite)
 	UCurveFloat* enemySpawnCurve;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TSubclassOf<UEvaluator> enemySpawnEquation;
 
 	/**
 	* Curve that indicates the delay between spawns of enemies.
 	*/
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(/*EditAnywhere, */BlueprintReadWrite)
 	UCurveFloat* enemySpawnDelayCurve;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TSubclassOf<UEvaluator> enemySpawnDelayEquation;
+
 	/**
 	* Curve that indicates how many enemies should be spawned at the same time per round.
 	*/
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(/*EditAnywhere, */BlueprintReadWrite)
 	UCurveFloat* enemySpawnBatchCurve;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TSubclassOf<UEvaluator> enemySpawnBatchEquation;
+
 	/**
 	* Curve that indicates how many enemies should be spawned at the same time per round.
 	*/
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(/*EditAnywhere, */BlueprintReadWrite)
 	UCurveFloat* enemyHealthCurve;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TSubclassOf<UEvaluator> enemyHealthEquation;
+
 	/**
 	* Curve that indicates how many enemies should be spawned at the same time per round.
 	*/
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(/*EditAnywhere, */BlueprintReadWrite)
 	UCurveFloat* enemyPowerCurve;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TSubclassOf<UEvaluator> enemyPowerEquation;
 
 	/**
 	* The base item budget of a round.
@@ -87,15 +103,18 @@ public:
 	* The minimum item budget multiplier of a round.
 	*/
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(/*EditAnywhere, */BlueprintReadWrite)
 	int minBudgetMultiplier = 1;
 
 	/**
 	* The maximum item budget multiplier of a round.
 	*/
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(/*EditAnywhere, */BlueprintReadWrite)
 	int maxBudgetMultiplier = 10;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TSubclassOf<UEvaluator> weaponBudgetMultiplierEquation;
 
 	/**
 	* Data table that contains the items that will be used and their cost.
@@ -108,14 +127,14 @@ public:
 	* Curve that indicates the start index of the items that will be considered in the table.
 	*/
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(/*EditAnywhere, */BlueprintReadWrite)
 	UCurveFloat* itemIndexOffsetCurve;
 
 	/**
 	* Curve that indicates the indeces in the item table that will be considered per round.
 	*/
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(/*EditAnywhere, */BlueprintReadWrite)
 	UCurveFloat* maxItemIndexCurve;
 
 	/**

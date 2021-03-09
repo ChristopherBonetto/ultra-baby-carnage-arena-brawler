@@ -28,9 +28,16 @@ UCurveFloat* UUBCWaveAsset::GetSpawnCurve() const
 	return info.enemySpawnCurve;
 }
 
-int UUBCWaveAsset::GetRoundSpawnCount(int round) const
+int UUBCWaveAsset::GetRoundSpawnCount(int round)
 {
-	return (int)GetCurveValue(GetSpawnCurve(), round);
+	//return (int)GetCurveValue(GetSpawnCurve(), round);
+	
+	if (!enemySpawnEquation)
+	{
+		enemySpawnEquation = NewObject<UEvaluator>((UObject*)this, info.enemySpawnEquation.Get());
+	}
+
+	return (int)(*enemySpawnEquation)(round);
 }
 
 UCurveFloat* UUBCWaveAsset::GetSpawnDelayCurve() const
@@ -38,9 +45,16 @@ UCurveFloat* UUBCWaveAsset::GetSpawnDelayCurve() const
 	return info.enemySpawnDelayCurve;
 }
 
-float UUBCWaveAsset::GetRoundSpawnDelay(int round) const
+float UUBCWaveAsset::GetRoundSpawnDelay(int round)
 {
-	return GetCurveValue(GetSpawnDelayCurve(), round);
+	//return GetCurveValue(GetSpawnDelayCurve(), round);
+	
+	if (!enemySpawnDelayEquation)
+	{
+		enemySpawnDelayEquation = NewObject<UEvaluator>((UObject*)this, info.enemySpawnDelayEquation.Get());
+	}
+
+	return (int)(*enemySpawnDelayEquation)(round);
 }
 
 UCurveFloat* UUBCWaveAsset::GetSpawnBatchCurve() const
@@ -48,9 +62,16 @@ UCurveFloat* UUBCWaveAsset::GetSpawnBatchCurve() const
 	return info.enemySpawnBatchCurve;
 }
 
-int UUBCWaveAsset::GetRoundBatchSize(int round) const
+int UUBCWaveAsset::GetRoundBatchSize(int round)
 {
-	return GetCurveValue(GetSpawnBatchCurve(), round);
+	//return GetCurveValue(GetSpawnBatchCurve(), round);
+
+	if (!enemySpawnBatchEquation)
+	{
+		enemySpawnBatchEquation = NewObject<UEvaluator>((UObject*)this, info.enemySpawnBatchEquation.Get());
+	}
+
+	return (int)(*enemySpawnBatchEquation)(round);
 }
 
 UCurveFloat* UUBCWaveAsset::GetHealthCurve() const
@@ -58,9 +79,16 @@ UCurveFloat* UUBCWaveAsset::GetHealthCurve() const
 	return info.enemyHealthCurve;
 }
 
-int UUBCWaveAsset::GetRoundHealthValue(int round) const
+int UUBCWaveAsset::GetRoundHealthValue(int round)
 {
-	return (int)GetCurveValue(GetHealthCurve(), round);
+	//return (int)GetCurveValue(GetHealthCurve(), round);
+
+	if (!enemyHealthEquation)
+	{
+		enemyHealthEquation = NewObject<UEvaluator>((UObject*)this, info.enemyHealthEquation.Get());
+	}
+
+	return (int)(*enemyHealthEquation)(round);
 }
 
 UCurveFloat* UUBCWaveAsset::GetPowerCurve() const
@@ -68,9 +96,16 @@ UCurveFloat* UUBCWaveAsset::GetPowerCurve() const
 	return info.enemyPowerCurve;
 }
 
-int UUBCWaveAsset::GetRoundPowerValue(int round) const
+int UUBCWaveAsset::GetRoundPowerValue(int round)
 {
-	return (int)GetCurveValue(GetPowerCurve(), round);
+	//return (int)GetCurveValue(GetPowerCurve(), round);
+
+	if (!enemyPowerEquation)
+	{
+		enemyPowerEquation = NewObject<UEvaluator>((UObject*)this, info.enemyPowerEquation.Get());
+	}
+
+	return (int)(*enemyPowerEquation)(round);
 }
 
 int UUBCWaveAsset::GetBaseBudget() const
@@ -86,6 +121,16 @@ int UUBCWaveAsset::GetMinBudgetMultiplier() const
 int UUBCWaveAsset::GetMaxBudgetMultiplier() const
 {
 	return info.maxBudgetMultiplier;
+}
+
+int UUBCWaveAsset::GetRoundBudgetMultiplier(int round)
+{
+	if (!weaponBudgetMultiplierEquation)
+	{
+		weaponBudgetMultiplierEquation = NewObject<UEvaluator>((UObject*)this, info.weaponBudgetMultiplierEquation.Get());
+	}
+
+	return (int)(*enemySpawnEquation)(round);
 }
 
 UCurveFloat * UUBCWaveAsset::GetTierCurve() const

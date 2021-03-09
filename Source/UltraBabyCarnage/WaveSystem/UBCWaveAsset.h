@@ -7,6 +7,7 @@
 #include "Engine/DataTable.h"
 #include "../UBCCharacter.h"
 #include "UBCWaveInfo.h"
+#include "Evaluator.h"
 #include "UBCWaveAsset.generated.h"
 
 /**
@@ -18,6 +19,26 @@ class ULTRABABYCARNAGE_API UUBCWaveAsset :
 	public UPrimaryDataAsset
 {
 	GENERATED_BODY()
+
+protected:
+
+	UPROPERTY(BlueprintReadWrite)
+	UEvaluator* enemySpawnEquation;
+	
+	UPROPERTY(BlueprintReadWrite)
+	UEvaluator* enemySpawnDelayEquation;
+	
+	UPROPERTY(BlueprintReadWrite)
+	UEvaluator* enemySpawnBatchEquation;
+	
+	UPROPERTY(BlueprintReadWrite)
+	UEvaluator* enemyHealthEquation;
+	
+	UPROPERTY(BlueprintReadWrite)
+	UEvaluator* enemyPowerEquation;
+	
+	UPROPERTY(BlueprintReadWrite)
+	UEvaluator* weaponBudgetMultiplierEquation;
 
 public:
 
@@ -50,32 +71,32 @@ public:
 	UFUNCTION(BlueprintCallable)
 	UCurveFloat* GetSpawnCurve() const;
 
-	UFUNCTION(BlueprintCallable)
-	int GetRoundSpawnCount(int round) const;
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int GetRoundSpawnCount(int round);
 
 	UFUNCTION(BlueprintCallable)
 	UCurveFloat* GetSpawnDelayCurve() const;
 
-	UFUNCTION(BlueprintCallable)
-	float GetRoundSpawnDelay(int round) const;
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetRoundSpawnDelay(int round);
 
 	UFUNCTION(BlueprintCallable)
 	UCurveFloat* GetSpawnBatchCurve() const;
 
-	UFUNCTION(BlueprintCallable)
-	int GetRoundBatchSize(int round) const;
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int GetRoundBatchSize(int round);
 
 	UFUNCTION(BlueprintCallable)
 	UCurveFloat* GetHealthCurve() const;
 
-	UFUNCTION(BlueprintCallable)
-	int GetRoundHealthValue(int round) const;
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int GetRoundHealthValue(int round);
 
 	UFUNCTION(BlueprintCallable)
 	UCurveFloat* GetPowerCurve() const;
 
-	UFUNCTION(BlueprintCallable)
-	int GetRoundPowerValue(int round) const;
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int GetRoundPowerValue(int round);
 
 	UFUNCTION(BlueprintCallable)
 	int GetBaseBudget() const;
@@ -85,6 +106,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	int GetMaxBudgetMultiplier() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int GetRoundBudgetMultiplier(int round);
 
 	UFUNCTION(BlueprintCallable)
 	UCurveFloat* GetTierCurve() const;

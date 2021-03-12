@@ -28,16 +28,20 @@ UCurveFloat* UUBCWaveAsset::GetSpawnCurve() const
 	return info.enemySpawnCurve;
 }
 
-int UUBCWaveAsset::GetRoundSpawnCount(int round)
+UEvaluator * UUBCWaveAsset::GetSpawnEquation()
 {
-	//return (int)GetCurveValue(GetSpawnCurve(), round);
-	
-	if (!enemySpawnEquation)
+	if (!enemySpawnEquation && info.enemySpawnEquation.Get()->IsValidLowLevelFast())
 	{
 		enemySpawnEquation = NewObject<UEvaluator>((UObject*)this, info.enemySpawnEquation.Get());
 	}
 
-	return (int)(*enemySpawnEquation)(round);
+	return enemySpawnEquation;
+}
+
+int UUBCWaveAsset::GetRoundSpawnCount(int round)
+{
+	//return (int)GetCurveValue(GetSpawnCurve(), round);
+	return (int)(*GetSpawnEquation())(round);
 }
 
 UCurveFloat* UUBCWaveAsset::GetSpawnDelayCurve() const
@@ -45,16 +49,20 @@ UCurveFloat* UUBCWaveAsset::GetSpawnDelayCurve() const
 	return info.enemySpawnDelayCurve;
 }
 
-float UUBCWaveAsset::GetRoundSpawnDelay(int round)
+UEvaluator * UUBCWaveAsset::GetSpawnDelayEquation()
 {
-	//return GetCurveValue(GetSpawnDelayCurve(), round);
-	
-	if (!enemySpawnDelayEquation)
+	if (!enemySpawnDelayEquation && info.enemySpawnDelayEquation.Get()->IsValidLowLevelFast())
 	{
 		enemySpawnDelayEquation = NewObject<UEvaluator>((UObject*)this, info.enemySpawnDelayEquation.Get());
 	}
 
-	return (int)(*enemySpawnDelayEquation)(round);
+	return enemySpawnDelayEquation;
+}
+
+float UUBCWaveAsset::GetRoundSpawnDelay(int round)
+{
+	//return GetCurveValue(GetSpawnDelayCurve(), round);
+	return (int)(*GetSpawnDelayEquation())(round);
 }
 
 UCurveFloat* UUBCWaveAsset::GetSpawnBatchCurve() const
@@ -62,16 +70,20 @@ UCurveFloat* UUBCWaveAsset::GetSpawnBatchCurve() const
 	return info.enemySpawnBatchCurve;
 }
 
-int UUBCWaveAsset::GetRoundBatchSize(int round)
+UEvaluator * UUBCWaveAsset::GetSpawnBatchEquation()
 {
-	//return GetCurveValue(GetSpawnBatchCurve(), round);
-
-	if (!enemySpawnBatchEquation)
+	if (!enemySpawnBatchEquation && info.enemySpawnBatchEquation.Get()->IsValidLowLevelFast())
 	{
 		enemySpawnBatchEquation = NewObject<UEvaluator>((UObject*)this, info.enemySpawnBatchEquation.Get());
 	}
 
-	return (int)(*enemySpawnBatchEquation)(round);
+	return enemySpawnBatchEquation;
+}
+
+int UUBCWaveAsset::GetRoundBatchSize(int round)
+{
+	//return GetCurveValue(GetSpawnBatchCurve(), round);
+	return (int)(*GetSpawnBatchEquation())(round);
 }
 
 UCurveFloat* UUBCWaveAsset::GetHealthCurve() const
@@ -79,16 +91,20 @@ UCurveFloat* UUBCWaveAsset::GetHealthCurve() const
 	return info.enemyHealthCurve;
 }
 
-int UUBCWaveAsset::GetRoundHealthValue(int round)
+UEvaluator * UUBCWaveAsset::GetHealthEquation()
 {
-	//return (int)GetCurveValue(GetHealthCurve(), round);
-
-	if (!enemyHealthEquation)
+	if (!enemyHealthEquation && info.enemyHealthEquation.Get()->IsValidLowLevelFast())
 	{
 		enemyHealthEquation = NewObject<UEvaluator>((UObject*)this, info.enemyHealthEquation.Get());
 	}
 
-	return (int)(*enemyHealthEquation)(round);
+	return enemyHealthEquation;
+}
+
+int UUBCWaveAsset::GetRoundHealthValue(int round)
+{
+	//return (int)GetCurveValue(GetHealthCurve(), round);
+	return (int)(*GetHealthEquation())(round);
 }
 
 UCurveFloat* UUBCWaveAsset::GetPowerCurve() const
@@ -96,16 +112,20 @@ UCurveFloat* UUBCWaveAsset::GetPowerCurve() const
 	return info.enemyPowerCurve;
 }
 
-int UUBCWaveAsset::GetRoundPowerValue(int round)
+UEvaluator * UUBCWaveAsset::GetPowerEquation()
 {
-	//return (int)GetCurveValue(GetPowerCurve(), round);
-
-	if (!enemyPowerEquation)
+	if (!enemyPowerEquation && info.enemyPowerEquation.Get()->IsValidLowLevelFast())
 	{
 		enemyPowerEquation = NewObject<UEvaluator>((UObject*)this, info.enemyPowerEquation.Get());
 	}
 
-	return (int)(*enemyPowerEquation)(round);
+	return enemyPowerEquation;
+}
+
+int UUBCWaveAsset::GetRoundPowerValue(int round)
+{
+	//return (int)GetCurveValue(GetPowerCurve(), round);
+	return (int)(*GetPowerEquation())(round);
 }
 
 int UUBCWaveAsset::GetBaseBudget() const
@@ -123,14 +143,19 @@ int UUBCWaveAsset::GetMaxBudgetMultiplier() const
 	return info.maxBudgetMultiplier;
 }
 
-int UUBCWaveAsset::GetRoundBudgetMultiplier(int round)
+UEvaluator * UUBCWaveAsset::GetBudgetMultiplierEquation()
 {
-	if (!weaponBudgetMultiplierEquation)
+	if (!weaponBudgetMultiplierEquation && info.weaponBudgetMultiplierEquation.Get()->IsValidLowLevelFast())
 	{
 		weaponBudgetMultiplierEquation = NewObject<UEvaluator>((UObject*)this, info.weaponBudgetMultiplierEquation.Get());
 	}
 
-	return (int)(*enemySpawnEquation)(round);
+	return weaponBudgetMultiplierEquation;
+}
+
+int UUBCWaveAsset::GetRoundBudgetMultiplier(int round)
+{
+	return (int)(*GetBudgetMultiplierEquation())(round);
 }
 
 UCurveFloat * UUBCWaveAsset::GetTierCurve() const

@@ -72,10 +72,16 @@ public:
 	UCurveFloat* GetSpawnCurve() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UEvaluator* GetSpawnEquation();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int GetRoundSpawnCount(int round);
 
 	UFUNCTION(BlueprintCallable)
 	UCurveFloat* GetSpawnDelayCurve() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UEvaluator* GetSpawnDelayEquation();
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetRoundSpawnDelay(int round);
@@ -84,16 +90,25 @@ public:
 	UCurveFloat* GetSpawnBatchCurve() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UEvaluator* GetSpawnBatchEquation();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int GetRoundBatchSize(int round);
 
 	UFUNCTION(BlueprintCallable)
 	UCurveFloat* GetHealthCurve() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UEvaluator* GetHealthEquation();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int GetRoundHealthValue(int round);
 
 	UFUNCTION(BlueprintCallable)
 	UCurveFloat* GetPowerCurve() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UEvaluator* GetPowerEquation();
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int GetRoundPowerValue(int round);
@@ -106,6 +121,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	int GetMaxBudgetMultiplier() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UEvaluator* GetBudgetMultiplierEquation();
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int GetRoundBudgetMultiplier(int round);

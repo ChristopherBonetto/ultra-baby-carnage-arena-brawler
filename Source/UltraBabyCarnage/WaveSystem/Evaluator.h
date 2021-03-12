@@ -7,7 +7,7 @@
 #include "Evaluator.generated.h"
 
 /**
- * Object
+ * Abstract object that takes an input value and returns an output value.
  */
 
 UCLASS(Abstract, Blueprintable)
@@ -22,7 +22,7 @@ public:
 	* Evaluates the input and returns an output.
 	*/
 
-	UFUNCTION(BlueprintImplementableEvent)
+	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
 	void Evaluate(float in, float& out) const;
 
 	/**

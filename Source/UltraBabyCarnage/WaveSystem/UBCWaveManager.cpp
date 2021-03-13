@@ -216,58 +216,65 @@ void AUBCWaveManager::CreateRoundItemList()
 	//UDataTable* itemTable = wave->GetItemCostTableOfTier();
 	UDataTable* itemTable = wave->GetItemCostTableOfTier(wave->GetRoundTier(currentRound));
 
-	FString contextString;
-
-	// Finds all the names of the items in the table.
-	TArray<FName> rowNames;
-	rowNames = itemTable->GetRowNames();
-
-	int itemCount = rowNames.Num();
-
-	// Finds the first and last indeces of the iteration.
-	//int last = FMath::Clamp(wave->GetRoundMaxItemIndex(currentRound), 0, itemCount - 1);
-	//int first = FMath::Clamp(wave->GetRoundItemIndexOffset(currentRound), 0, last);	
-	int last = itemCount - 1;
-	int first = 0;
-
-	// Retrieves the default item class of the round.
-	int defaultIndex = wave->GetRoundDefaultItemIndex(currentRound);
-	defaultItemClass = FMath::IsWithin(defaultIndex, 0, itemCount) ? 
-		itemTable->FindRow<FUBCWeaponCost>(rowNames[defaultIndex], contextString)->weaponClass :
-		nullptr;
-
-	for (int i = last; i >= first; i--)
+	if (itemTable->IsValidLowLevelFast())
 	{
-		FUBCWeaponCost* row = itemTable->FindRow<FUBCWeaponCost>(rowNames[i], contextString);
-		if (row)
+		FString contextString;
+
+		// Finds all the names of the items in the table.
+		TArray<FName> rowNames;
+		rowNames = itemTable->GetRowNames();
+
+		int itemCount = rowNames.Num();
+
+		// Finds the first and last indeces of the iteration.
+		//int last = FMath::Clamp(wave->GetRoundMaxItemIndex(currentRound), 0, itemCount - 1);
+		//int first = FMath::Clamp(wave->GetRoundItemIndexOffset(currentRound), 0, last);	
+		int last = itemCount - 1;
+		int first = 0;
+
+		// Retrieves the default item class of the round.
+		int defaultIndex = wave->GetRoundDefaultItemIndex(currentRound);
+		defaultItemClass = FMath::IsWithin(defaultIndex, 0, itemCount) ?
+			itemTable->FindRow<FUBCWeaponCost>(rowNames[defaultIndex], contextString)->weaponClass :
+			nullptr;
+
+		for (int i = last; i >= first; i--)
 		{
-			int cost = row->cost;
-
-			// Adds to the item list the class and amount to buy.
-			int amountToBuy = FMath::RandRange(0, roundBudget / cost);
-			roundItems.Add(TPair<TSubclassOf<AUBCItemBase>, int>(row->weaponClass, amountToBuy));
-			
-			// Deducts the cost from the budget.
-			roundBudget -= cost * amountToBuy;
-
-			// If the budget is 0, no other items are bought.
-			if (roundBudget <= 0)
+			FUBCWeaponCost* row = itemTable->FindRow<FUBCWeaponCost>(rowNames[i], contextString);
+			if (row)
 			{
-				break;
+				int cost = row->cost;
+
+				// Adds to the item list the class and amount to buy.
+				int amountToBuy = FMath::RandRange(0, roundBudget / cost);
+				roundItems.Add(TPair<TSubclassOf<AUBCItemBase>, int>(row->weaponClass, amountToBuy));
+
+				// Deducts the cost from the budget.
+				roundBudget -= cost * amountToBuy;
+
+				// If the budget is 0, no other items are bought.
+				if (roundBudget <= 0)
+				{
+					break;
+				}
+			}
+		}
+
+		// If there's still budget left, it is all spent on copies of the first item.
+		if (roundBudget > 0)
+		{
+			FUBCWeaponCost* row = itemTable->FindRow<FUBCWeaponCost>(rowNames[first], contextString);
+			if (row->cost <= roundBudget)
+			{
+				int amount = roundBudget / row->cost;
+				roundItems[last].Value += amount;
+				roundBudget -= amount * row->cost;
 			}
 		}
 	}
-
-	// If there's still budget left, it is all spent on copies of the first item.
-	if (roundBudget > 0)
+	else
 	{
-		FUBCWeaponCost* row = itemTable->FindRow<FUBCWeaponCost>(rowNames[first], contextString);
-		if (row->cost <= roundBudget)
-		{
-			int amount = roundBudget / row->cost;
-			roundItems[last].Value += amount;
-			roundBudget -= amount * row->cost;
-		}
+		defaultItemClass = nullptr;
 	}
 
 #if WITH_EDITOR

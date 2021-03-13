@@ -212,7 +212,7 @@ public:
 	*/
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Wave: Spawn", Meta = (MakeEditWidget = true))
-	TArray<FVector> enemySpawnPoints;
+	TArray<FVector> enemySpawnPoints = TArray<FVector>();
 
 #pragma endregion
 

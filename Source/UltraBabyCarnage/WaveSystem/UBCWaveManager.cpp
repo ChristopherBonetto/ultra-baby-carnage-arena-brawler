@@ -146,8 +146,15 @@ FVector AUBCWaveManager::GetSpawnLocation() const
 {
 	// Retrieves the minimum length of the array that respects the parameters.
 	int size = FMath::Min(GetCutoffLength(), FMath::Min(maxActiveSpawnPoints, enemySpawnPoints.Num()));
-	// Returns a random spawn point inside this pool.
-	return enemySpawnPoints[FMath::RandRange(0, size - 1)];
+
+	if(enemySpawnPoints.IsValidIndex(size - 1))
+	{ 
+		// Returns a random spawn point inside this pool.
+		return enemySpawnPoints[FMath::RandRange(0, size - 1)];
+	}
+
+	// No available spawn point was found, a zero vector is returned.
+	return FVector::ZeroVector;
 }
 
 void AUBCWaveManager::SortSpawnPointsByDistance()

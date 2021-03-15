@@ -49,6 +49,8 @@ protected:
 
 	static float GetCurveValue(UCurveFloat* curve, int round);
 
+	UEvaluator* GetEquation(UEvaluator*& eqInstance, const TSubclassOf<UEvaluator>& evalClass);
+
 public:
 
 	/**

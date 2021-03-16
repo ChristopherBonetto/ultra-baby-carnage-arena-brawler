@@ -47,10 +47,25 @@ bool UUBCGameInstance::IsSingleton(TSubclassOf<AActor> actorClass) const
 	return singletons.Contains(actorClass);
 }
 
-AActor* UUBCGameInstance::GetInstanceOf(TSubclassOf<AActor> actorClass, bool& outInstanceFound) const
+AActor* UUBCGameInstance::GetInstanceOf(TSubclassOf<AActor> actorClass, bool& outInstanceFound)
 {
-	AActor* instance = singletons[actorClass];
-	outInstanceFound = instance->IsValidLowLevel();
+	AActor* instance = nullptr;
+
+	if (IsSingleton(actorClass))
+	{
+		instance = singletons[actorClass];
+		if (!instance->IsValidLowLevelFast())
+		{
+			instance = CreateInstance(actorClass);
+		}
+	}
+	else
+	{
+		singletons.Add(actorClass, instance = CreateInstance(actorClass));
+		//MakeSingleton(actorClass);
+	}
+
+	outInstanceFound = instance->IsValidLowLevelFast();
 	return instance;
 }
 

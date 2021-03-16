@@ -22,6 +22,7 @@ public:
 	*/
 
 	UUBCGameInstance();
+
 	virtual void Init() override;
 
 protected:
@@ -62,8 +63,8 @@ public:
 	* Returns the instance of the specified actor class. If none are found, a nullptr is returned.
 	*/
 
-	UFUNCTION(BlueprintCallable, Category = Singleton, meta = (DeterminesOutputType = "actorClass"))
-	AActor* GetInstanceOf(TSubclassOf<AActor> actorClass, bool& outInstanceFound) const;
+	UFUNCTION(BlueprintCallable, BlueprintPure, Category = Singleton, meta = (DeterminesOutputType = "actorClass"))
+	AActor* GetInstanceOf(TSubclassOf<AActor> actorClass, bool& outInstanceFound);
 
 	/**
 	* Removes the instance of the specified actor class and returns whether the instance could be removed.

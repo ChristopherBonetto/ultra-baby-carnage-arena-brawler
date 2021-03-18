@@ -23,12 +23,12 @@ public:
 	*/
 
 	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
-	void Evaluate(float in, float& out) const;
+	void Evaluate(float in, float& out);
 
 	/**
 	* Evaluates the input.
 	*/
 
-	float operator () (float in) const;
+	float operator () (float in);
 
 };

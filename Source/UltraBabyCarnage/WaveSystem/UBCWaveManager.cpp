@@ -210,7 +210,8 @@ void AUBCWaveManager::OnWaveStart_Implementation()
 	//roundBudgetMultiplier = wave->GetMinBudgetMultiplier();
 
 	// Starts the round.
-	roundStart.Broadcast();
+	//roundStart.Broadcast();
+	GetWorldTimerManager().SetTimer(roundStartTimer, this, &AUBCWaveManager::StartRound, wave->GetRoundDelay(), false);
 }
 
 void AUBCWaveManager::CreateRoundItemList()
@@ -314,6 +315,10 @@ void AUBCWaveManager::OnRoundStart_Implementation()
 
 		currentEnemyCount = spawnedEnemyCount = 0;
 		enemyBatchSize = wave->GetRoundBatchSize(currentRound);
+
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Cyan, "Spawn initial enemies");
+		SpawnEnemies();
+
 		GetWorldTimerManager().SetTimer(enemySpawnTimer, this, &AUBCWaveManager::SpawnEnemies, wave->GetRoundSpawnDelay(currentRound), true);
 		GetWorldTimerManager().SetTimer(roundUpdateTimer, this, &AUBCWaveManager::UpdateRound, .1f, true);
 	}

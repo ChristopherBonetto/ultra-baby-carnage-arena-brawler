@@ -98,23 +98,26 @@ void AUBCWaveManager::SpawnEnemy()
 	// Spawns the enemy.
 	AUBCCharacter* enemy = (AUBCCharacter*)GetWorld()->SpawnActor(*wave->GetEnemyClass(), &transform, spawnParams);
 
-	// Increase the counters.
+	if (enemy->IsValidLowLevelFast())
+	{
+		// Increase the counters.
 
-	currentEnemyCount++;
-	spawnedEnemyCount++;
+		currentEnemyCount++;
+		spawnedEnemyCount++;
 
-	// Spawns and attaches the item to the actor.
-	//AUBCItemBase* item = GetItemToEquip();
-	//if (item->IsValidLowLevelFast())
-	//{
-	//	item->AttachToActor(enemy, FAttachmentTransformRules::KeepRelativeTransform, "LeftHandSocket");
-	//}
+		// Spawns and attaches the item to the actor.
+		//AUBCItemBase* item = GetItemToEquip();
+		//if (item->IsValidLowLevelFast())
+		//{
+		//	item->AttachToActor(enemy, FAttachmentTransformRules::KeepRelativeTransform, "LeftHandSocket");
+		//}
 
-	// Binds to the death event of the enemy.
-	enemy->death.AddDynamic(this, &AUBCWaveManager::OnEnemyDeath);
+		// Binds to the death event of the enemy.
+		enemy->death.AddDynamic(this, &AUBCWaveManager::OnEnemyDeath);
 
-	// Invokes the enemy spawned event.
-	enemySpawned.Broadcast(enemy);
+		// Invokes the enemy spawned event.
+		enemySpawned.Broadcast(enemy);
+	}
 }
 
 void AUBCWaveManager::SpawnEnemies()

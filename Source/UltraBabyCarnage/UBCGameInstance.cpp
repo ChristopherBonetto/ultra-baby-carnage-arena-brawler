@@ -17,6 +17,8 @@ void UUBCGameInstance::Init()
 			//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, pair.Key->GetName() + " -> " + pair.Value->GetName());
 		}
 	}
+
+	OnInit();
 }
 
 AActor* UUBCGameInstance::CreateInstance(TSubclassOf<AActor> actorClass)

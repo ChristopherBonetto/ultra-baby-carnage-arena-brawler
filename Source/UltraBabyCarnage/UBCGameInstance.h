@@ -36,6 +36,9 @@ protected:
 
 protected:
 
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnInit();
+
 	/**
 	* Finds or create an instance for the specified actor class and returns it.
 	*/

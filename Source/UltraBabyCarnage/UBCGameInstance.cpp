@@ -18,7 +18,7 @@ void UUBCGameInstance::Init()
 		}
 	}
 
-	OnInit();
+	UGameInstance::Init();
 }
 
 AActor* UUBCGameInstance::CreateInstance(TSubclassOf<AActor> actorClass)

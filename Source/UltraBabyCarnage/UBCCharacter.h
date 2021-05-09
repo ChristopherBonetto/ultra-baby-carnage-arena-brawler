@@ -13,7 +13,7 @@ class ULTRABABYCARNAGE_API AUBCCharacter :
 
 public:
 
-	DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FDeath, AUBCCharacter*, character);
+	DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FDeath, AUBCCharacter*, character, AActor*, causer);
 
 public:
 
@@ -27,6 +27,6 @@ public:
 protected:
 
 	UFUNCTION(BlueprintNativeEvent)
-	void OnDeath(AUBCCharacter* character);
+	void OnDeath(AUBCCharacter* character, AActor* causer);
 
 };

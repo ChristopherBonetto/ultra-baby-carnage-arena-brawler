@@ -48,7 +48,7 @@ public:
 
 	// Delegate used when any one of the spawned enemies dies.
 
-	DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FAnyEnemyDeath, AUBCCharacter*, enemy);
+	DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FAnyEnemyDeath, AUBCCharacter*, enemy, AActor*, causer);
 
 #pragma endregion
 
@@ -409,14 +409,14 @@ protected:
 	*/
 
 	UFUNCTION(BlueprintNativeEvent, Category = "Wave: Spawn")
-	void OnEnemyDeath(AUBCCharacter* enemy);
+	void OnEnemyDeath(AUBCCharacter* enemy, AActor* causer);
 
 	/**
 	* Called when any of the spawned enemies die.
 	*/
 
 	UFUNCTION(BlueprintNativeEvent, Category = "Wave: Spawn")
-	void OnAnyEnemyDeath(AUBCCharacter* enemy);
+	void OnAnyEnemyDeath(AUBCCharacter* enemy, AActor* causer);
 
 #pragma endregion
 

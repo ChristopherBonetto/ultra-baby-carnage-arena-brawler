@@ -378,12 +378,12 @@ void AUBCWaveManager::OnEnemySpawned_Implementation(AUBCCharacter* enemy)
 	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Cyan, TEXT("Enemy spawned."));
 }
 
-void AUBCWaveManager::OnEnemyDeath_Implementation(AUBCCharacter* enemy)
+void AUBCWaveManager::OnEnemyDeath_Implementation(AUBCCharacter* enemy, AActor* causer)
 {
-	anyEnemyDeath.Broadcast(enemy);
+	anyEnemyDeath.Broadcast(enemy, causer);
 }
 
-void AUBCWaveManager::OnAnyEnemyDeath_Implementation(AUBCCharacter* enemy)
+void AUBCWaveManager::OnAnyEnemyDeath_Implementation(AUBCCharacter* enemy, AActor* causer)
 {
 	// The active enemy count is decreased.
 	currentEnemyCount--;

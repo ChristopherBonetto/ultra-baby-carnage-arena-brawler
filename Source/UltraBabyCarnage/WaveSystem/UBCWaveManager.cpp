@@ -7,6 +7,10 @@
 
 AUBCWaveManager::AUBCWaveManager()
 {
+}
+
+void AUBCWaveManager::BeginPlay()
+{
 	// Binds the delegates to the events.
 
 	waveStart.AddDynamic(this, &AUBCWaveManager::OnWaveStart);
@@ -16,10 +20,7 @@ AUBCWaveManager::AUBCWaveManager()
 	waveDone.AddDynamic(this, &AUBCWaveManager::OnWaveDone);
 	enemySpawned.AddDynamic(this, &AUBCWaveManager::OnEnemySpawned);
 	anyEnemyDeath.AddDynamic(this, &AUBCWaveManager::OnAnyEnemyDeath);
-}
 
-void AUBCWaveManager::BeginPlay()
-{
 	if (wave->IsValidLowLevel())
 	{
 		// Starts the wave.
@@ -29,6 +30,8 @@ void AUBCWaveManager::BeginPlay()
 	{
 		GEngine->AddOnScreenDebugMessage(0, 5.f, FColor::Red, TEXT("The Wave Manager doesn't have a wave asset."));
 	}
+
+	AActor::BeginPlay();
 }
 
 void AUBCWaveManager::UpdateRound()

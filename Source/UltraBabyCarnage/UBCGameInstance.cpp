@@ -8,8 +8,6 @@ UUBCGameInstance::UUBCGameInstance()
 
 void UUBCGameInstance::Init()
 {
-	GEngine->GameViewport->Viewport->ViewportResizedEvent.AddUObject(this, &UUBCGameInstance::OnViewportSizeChange);
-	
 	for (TPair<TSubclassOf<AActor>, AActor*> &pair : singletons)
 	{
 		// If the instance of the class is not valid, a new instance is made.
@@ -21,6 +19,12 @@ void UUBCGameInstance::Init()
 	}
 
 	UGameInstance::Init();
+}
+
+void UUBCGameInstance::OnStart()
+{
+	GEngine->GameViewport->Viewport->ViewportResizedEvent.AddUObject(this, &UUBCGameInstance::OnViewportSizeChange);
+	UGameInstance::OnStart();
 }
 
 AActor* UUBCGameInstance::CreateInstance(TSubclassOf<AActor> actorClass)

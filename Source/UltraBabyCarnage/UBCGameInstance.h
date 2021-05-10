@@ -56,6 +56,8 @@ public:
 
 	virtual void Init() override;
 
+	virtual void OnStart() override;
+
 	/**
 	* Makes the specified actor class singleton so that the instance can always be retrieved.
 	*/

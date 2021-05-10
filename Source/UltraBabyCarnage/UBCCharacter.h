@@ -29,4 +29,8 @@ protected:
 	UFUNCTION(BlueprintNativeEvent)
 	void OnDeath(AUBCCharacter* character, AActor* causer);
 
+public:
+
+	virtual void BeginPlay() override;
+
 };

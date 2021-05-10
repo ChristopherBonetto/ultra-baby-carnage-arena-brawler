@@ -35,7 +35,10 @@ protected:
 	UEvaluator* enemyHealthEquation;
 	
 	UPROPERTY(BlueprintReadWrite)
-	UEvaluator* enemyPowerEquation;
+	UEvaluator* enemyPowerEquation;	
+
+	UPROPERTY(BlueprintReadWrite)
+	UEvaluator* enemySpeedEquation;
 	
 	UPROPERTY(BlueprintReadWrite)
 	UEvaluator* weaponBudgetMultiplierEquation;
@@ -114,6 +117,12 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int GetRoundPowerValue(int round);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UEvaluator* GetSpeedEquation();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int GetRoundSpeedValue(int round);
 
 	UFUNCTION(BlueprintCallable)
 	int GetBaseBudget() const;

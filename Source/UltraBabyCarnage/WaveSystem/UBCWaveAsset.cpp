@@ -152,6 +152,16 @@ int UUBCWaveAsset::GetRoundPowerValue(int round)
 	return (int)(*GetPowerEquation())(round);
 }
 
+UEvaluator * UUBCWaveAsset::GetSpeedEquation()
+{
+	return GetEquation(enemySpeedEquation, info.enemySpeedEquation);
+}
+
+int UUBCWaveAsset::GetRoundSpeedValue(int round)
+{
+	return (int)(*GetSpeedEquation())(round);
+}
+
 int UUBCWaveAsset::GetBaseBudget() const
 {
 	return info.baseBudget;

@@ -91,6 +91,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TSubclassOf<UEvaluator> enemyPowerEquation;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TSubclassOf<UEvaluator> enemySpeedEquation;
 
 	/**
 	* The base item budget of a round.

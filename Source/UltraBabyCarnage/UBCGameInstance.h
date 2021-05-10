@@ -17,13 +17,15 @@ class ULTRABABYCARNAGE_API UUBCGameInstance :
 	
 public:
 
+	DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FViewportSizeChanged, int, width, int, height);
+
+public:
+
 	/**
 	* Construct the GameInstance and finds or create the instances of the singletons.
 	*/
 
 	UUBCGameInstance();
-
-	virtual void Init() override;
 
 protected:
 
@@ -34,6 +36,11 @@ protected:
 	UPROPERTY(EditAnywhere, Category = Singleton, BlueprintReadWrite)
 	TMap<TSubclassOf<AActor>, AActor*> singletons;
 
+public:
+
+	UPROPERTY(BlueprintCallable, BlueprintAssignable)
+	FViewportSizeChanged viewportSizeChanged;
+
 protected:
 
 	/**
@@ -43,7 +50,11 @@ protected:
 	UFUNCTION(BlueprintCallable, Category = Singleton, meta = (DeterminesOutputType = "actorClass"))
 	AActor* CreateInstance(TSubclassOf<AActor> actorClass);
 
+	void OnViewportSizeChange(FViewport* viewport, uint32 value);
+
 public:
+
+	virtual void Init() override;
 
 	/**
 	* Makes the specified actor class singleton so that the instance can always be retrieved.

@@ -8,6 +8,8 @@ UUBCGameInstance::UUBCGameInstance()
 
 void UUBCGameInstance::Init()
 {
+	GEngine->GameViewport->Viewport->ViewportResizedEvent.AddUObject(this, &UUBCGameInstance::OnViewportSizeChange);
+	
 	for (TPair<TSubclassOf<AActor>, AActor*> &pair : singletons)
 	{
 		// If the instance of the class is not valid, a new instance is made.
@@ -86,4 +88,9 @@ bool UUBCGameInstance::RemoveInstance(TSubclassOf<AActor> actorClass, bool destr
 	}
 
 	return false;
+}
+
+void UUBCGameInstance::OnViewportSizeChange(FViewport* viewport, uint32 value)
+{
+	viewportSizeChanged.Broadcast(viewport->GetSizeXY().X, viewport->GetSizeXY().Y);
 }

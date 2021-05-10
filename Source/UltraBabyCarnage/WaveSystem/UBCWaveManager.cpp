@@ -7,10 +7,6 @@
 
 AUBCWaveManager::AUBCWaveManager()
 {
-}
-
-void AUBCWaveManager::BeginPlay()
-{
 	// Binds the delegates to the events.
 
 	waveStart.AddDynamic(this, &AUBCWaveManager::OnWaveStart);
@@ -20,6 +16,10 @@ void AUBCWaveManager::BeginPlay()
 	waveDone.AddDynamic(this, &AUBCWaveManager::OnWaveDone);
 	enemySpawned.AddDynamic(this, &AUBCWaveManager::OnEnemySpawned);
 	anyEnemyDeath.AddDynamic(this, &AUBCWaveManager::OnAnyEnemyDeath);
+}
+
+void AUBCWaveManager::BeginPlay()
+{
 
 	if (wave->IsValidLowLevel())
 	{

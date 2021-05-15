@@ -325,8 +325,11 @@ void AUBCWaveManager::OnRoundStart_Implementation()
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Cyan, "Spawn initial enemies");
 		SpawnEnemies();
 
-		GetWorldTimerManager().SetTimer(enemySpawnTimer, this, &AUBCWaveManager::SpawnEnemies, wave->GetRoundSpawnDelay(currentRound), true);
-		GetWorldTimerManager().SetTimer(roundUpdateTimer, this, &AUBCWaveManager::UpdateRound, .1f, true);
+		if (roundEnemyCount > 1)
+		{
+			GetWorldTimerManager().SetTimer(enemySpawnTimer, this, &AUBCWaveManager::SpawnEnemies, wave->GetRoundSpawnDelay(currentRound), true);
+			GetWorldTimerManager().SetTimer(roundUpdateTimer, this, &AUBCWaveManager::UpdateRound, .1f, true);
+		}
 	}
 	else
 	{

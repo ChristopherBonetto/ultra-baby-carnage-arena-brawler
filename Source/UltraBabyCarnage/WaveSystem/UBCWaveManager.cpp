@@ -432,6 +432,8 @@ void AUBCWaveManager::ForceRoundDone()
 	isRoundDone = true;
 	GetWorldTimerManager().ClearTimer(roundUpdateTimer);
 	GetWorldTimerManager().ClearTimer(enemySpawnTimer);
+
+	roundDone.Broadcast();
 }
 
 void AUBCWaveManager::ForceWaveDone()

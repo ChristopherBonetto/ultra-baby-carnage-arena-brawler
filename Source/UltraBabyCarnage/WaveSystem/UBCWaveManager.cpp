@@ -210,8 +210,6 @@ int AUBCWaveManager::GetCutoffLength() const
 void AUBCWaveManager::OnWaveStart_Implementation() 
 {
 	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Cyan, TEXT("Wave started"));
-	// Retrieves the max active enemies count from the wave asset.
-	maxActiveEnemiesCount = wave->GetMaxActiveEnemiesCount();
 
 	//roundBudgetMultiplier = wave->GetMinBudgetMultiplier();
 
@@ -311,6 +309,9 @@ void AUBCWaveManager::OnRoundStart_Implementation()
 	// Retrieves the amount of enemies to spawn this round from the asset.
 	roundEnemyCount = wave->GetRoundSpawnCount(currentRound);
 	
+	// Retrieves the maximum amount of enemies that can be active at the same time this round.
+	maxActiveEnemiesCount = wave->GetRoundMaxActiveEnemiesCount(currentRound);
+
 	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Cyan, FString::FromInt(roundEnemyCount) + " enemies should spawn");
 
 	// If the enemy count is greater than 0, the round is actually started, else it is ended.

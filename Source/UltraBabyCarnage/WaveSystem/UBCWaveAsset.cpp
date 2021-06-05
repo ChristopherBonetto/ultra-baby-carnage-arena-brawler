@@ -36,119 +36,63 @@ int UUBCWaveAsset::GetMaxActiveEnemiesCount() const
 	return info.maxActiveEnemiesCount;
 }
 
-UCurveFloat* UUBCWaveAsset::GetSpawnCurve() const
-{
-	return info.enemySpawnCurve;
-}
-
 UEvaluator * UUBCWaveAsset::GetSpawnEquation()
 {
-	//if (!enemySpawnEquation && info.enemySpawnEquation.Get()->IsValidLowLevelFast() || enemySpawnEquation->GetClass() != info.enemySpawnEquation.Get())
-	//{
-	//	enemySpawnEquation = NewObject<UEvaluator>((UObject*)this, info.enemySpawnEquation.Get());
-	//}
-
-	//return enemySpawnEquation;
-	
 	return GetEquation(enemySpawnEquation, info.enemySpawnEquation);
 }
 
 int UUBCWaveAsset::GetRoundSpawnCount(int round)
 {
-	//return (int)GetCurveValue(GetSpawnCurve(), round);
 	return (int)(*GetSpawnEquation())(round);
 }
 
-UCurveFloat* UUBCWaveAsset::GetSpawnDelayCurve() const
+UEvaluator * UUBCWaveAsset::GetMaxActiveEnemiesCountEquation()
 {
-	return info.enemySpawnDelayCurve;
+	return GetEquation(maxActiveEnemyCountEquation, info.maxActiveEnemyCountEquation);
+}
+
+int UUBCWaveAsset::GetRoundMaxActiveEnemiesCount(int round)
+{
+	return FMath::Clamp((int)(*GetMaxActiveEnemiesCountEquation())(round), 0, info.maxActiveEnemiesCount);
 }
 
 UEvaluator * UUBCWaveAsset::GetSpawnDelayEquation()
 {
-	//if (!enemySpawnDelayEquation && info.enemySpawnDelayEquation.Get()->IsValidLowLevelFast() || enemySpawnDelayEquation->GetClass() != info.enemySpawnDelayEquation.Get())
-	//{
-	//	enemySpawnDelayEquation = NewObject<UEvaluator>((UObject*)this, info.enemySpawnDelayEquation.Get());
-	//}
-
-	//return enemySpawnDelayEquation;
-
 	return GetEquation(enemySpawnDelayEquation, info.enemySpawnDelayEquation);
 }
 
 float UUBCWaveAsset::GetRoundSpawnDelay(int round)
 {
-	//return GetCurveValue(GetSpawnDelayCurve(), round);
 	return (int)(*GetSpawnDelayEquation())(round);
-}
-
-UCurveFloat* UUBCWaveAsset::GetSpawnBatchCurve() const
-{
-	return info.enemySpawnBatchCurve;
 }
 
 UEvaluator * UUBCWaveAsset::GetSpawnBatchEquation()
 {
-	//UClass* eqClass = info.enemySpawnBatchEquation.Get();
-	//if (!enemySpawnBatchEquation && eqClass->IsValidLowLevelFast() || enemySpawnBatchEquation->GetClass() != info.enemySpawnBatchEquation.Get())
-	//{
-	//	enemySpawnBatchEquation = NewObject<UEvaluator>((UObject*)this, info.enemySpawnBatchEquation.Get());
-	//}
-
-	//return enemySpawnBatchEquation;
-
 	return GetEquation(enemySpawnBatchEquation, info.enemySpawnBatchEquation);
 }
 
 int UUBCWaveAsset::GetRoundBatchSize(int round)
 {
-	//return GetCurveValue(GetSpawnBatchCurve(), round);
 	return (int)(*GetSpawnBatchEquation())(round);
-}
-
-UCurveFloat* UUBCWaveAsset::GetHealthCurve() const
-{
-	return info.enemyHealthCurve;
 }
 
 UEvaluator * UUBCWaveAsset::GetHealthEquation()
 {
-	//if (!enemyHealthEquation && info.enemyHealthEquation.Get()->IsValidLowLevelFast() || enemyHealthEquation->GetClass() != info.enemyHealthEquation.Get())
-	//{
-	//	enemyHealthEquation = NewObject<UEvaluator>((UObject*)this, info.enemyHealthEquation.Get());
-	//}
-
-	//return enemyHealthEquation;
-
 	return GetEquation(enemyHealthEquation, info.enemyHealthEquation);
 }
 
 int UUBCWaveAsset::GetRoundHealthValue(int round)
 {
-	//return (int)GetCurveValue(GetHealthCurve(), round);
 	return (int)(*GetHealthEquation())(round);
-}
-
-UCurveFloat* UUBCWaveAsset::GetPowerCurve() const
-{
-	return info.enemyPowerCurve;
 }
 
 UEvaluator * UUBCWaveAsset::GetPowerEquation()
 {
-	//if (!enemyPowerEquation && info.enemyPowerEquation.Get()->IsValidLowLevelFast() || enemyPowerEquation->GetClass() != info.enemyPowerEquation.Get())
-	//{
-	//	enemyPowerEquation = NewObject<UEvaluator>((UObject*)this, info.enemyPowerEquation.Get());
-	//}
-
-	//return enemyPowerEquation;
-
 	return GetEquation(enemyPowerEquation, info.enemyPowerEquation);
 }
 
 int UUBCWaveAsset::GetRoundPowerValue(int round)
 {
-	//return (int)GetCurveValue(GetPowerCurve(), round);
 	return (int)(*GetPowerEquation())(round);
 }
 
@@ -179,13 +123,6 @@ int UUBCWaveAsset::GetMaxBudgetMultiplier() const
 
 UEvaluator * UUBCWaveAsset::GetBudgetMultiplierEquation()
 {
-	//if (!weaponBudgetMultiplierEquation && info.weaponBudgetMultiplierEquation.Get()->IsValidLowLevelFast() || weaponBudgetMultiplierEquation->GetClass() != info.weaponBudgetMultiplierEquation.Get())
-	//{
-	//	weaponBudgetMultiplierEquation = NewObject<UEvaluator>((UObject*)this, info.weaponBudgetMultiplierEquation.Get());
-	//}
-
-	//return weaponBudgetMultiplierEquation;
-
 	return GetEquation(weaponBudgetMultiplierEquation, info.weaponBudgetMultiplierEquation);
 }
 

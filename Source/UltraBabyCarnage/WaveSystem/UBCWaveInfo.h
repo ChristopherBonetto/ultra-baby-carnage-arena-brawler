@@ -42,52 +42,20 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int maxActiveEnemiesCount = 10;
 
-	/**
-	* Curve that indicates how many enemies should be spawned per round.
-	*/
-
-	UPROPERTY(/*EditAnywhere, */BlueprintReadWrite)
-	UCurveFloat* enemySpawnCurve;
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TSubclassOf<UEvaluator> enemySpawnEquation;
 
-	/**
-	* Curve that indicates the delay between spawns of enemies.
-	*/
-
-	UPROPERTY(/*EditAnywhere, */BlueprintReadWrite)
-	UCurveFloat* enemySpawnDelayCurve;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TSubclassOf<UEvaluator> maxActiveEnemyCountEquation;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TSubclassOf<UEvaluator> enemySpawnDelayEquation;
 
-	/**
-	* Curve that indicates how many enemies should be spawned at the same time per round.
-	*/
-
-	UPROPERTY(/*EditAnywhere, */BlueprintReadWrite)
-	UCurveFloat* enemySpawnBatchCurve;
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TSubclassOf<UEvaluator> enemySpawnBatchEquation;
 
-	/**
-	* Curve that indicates how many enemies should be spawned at the same time per round.
-	*/
-
-	UPROPERTY(/*EditAnywhere, */BlueprintReadWrite)
-	UCurveFloat* enemyHealthCurve;
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TSubclassOf<UEvaluator> enemyHealthEquation;
-
-	/**
-	* Curve that indicates how many enemies should be spawned at the same time per round.
-	*/
-
-	UPROPERTY(/*EditAnywhere, */BlueprintReadWrite)
-	UCurveFloat* enemyPowerCurve;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TSubclassOf<UEvaluator> enemyPowerEquation;

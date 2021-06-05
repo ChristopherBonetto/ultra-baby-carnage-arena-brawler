@@ -23,6 +23,9 @@ class ULTRABABYCARNAGE_API UUBCWaveAsset :
 protected:
 
 	UPROPERTY(BlueprintReadWrite)
+	UEvaluator* maxActiveEnemyCountEquation;
+
+	UPROPERTY(BlueprintReadWrite)
 	UEvaluator* enemySpawnEquation;
 	
 	UPROPERTY(BlueprintReadWrite)
@@ -73,17 +76,17 @@ public:
 	UFUNCTION(BlueprintCallable)
 	int GetMaxActiveEnemiesCount() const;
 
-	UFUNCTION(BlueprintCallable)
-	UCurveFloat* GetSpawnCurve() const;
-
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UEvaluator* GetSpawnEquation();
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int GetRoundSpawnCount(int round);
 
-	UFUNCTION(BlueprintCallable)
-	UCurveFloat* GetSpawnDelayCurve() const;
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UEvaluator* GetMaxActiveEnemiesCountEquation();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int GetRoundMaxActiveEnemiesCount(int round);
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UEvaluator* GetSpawnDelayEquation();
@@ -91,26 +94,17 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetRoundSpawnDelay(int round);
 
-	UFUNCTION(BlueprintCallable)
-	UCurveFloat* GetSpawnBatchCurve() const;
-
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UEvaluator* GetSpawnBatchEquation();
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int GetRoundBatchSize(int round);
 
-	UFUNCTION(BlueprintCallable)
-	UCurveFloat* GetHealthCurve() const;
-
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UEvaluator* GetHealthEquation();
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int GetRoundHealthValue(int round);
-
-	UFUNCTION(BlueprintCallable)
-	UCurveFloat* GetPowerCurve() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UEvaluator* GetPowerEquation();

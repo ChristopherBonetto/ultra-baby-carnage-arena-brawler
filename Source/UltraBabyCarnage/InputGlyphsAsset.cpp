@@ -6,10 +6,13 @@
 
 UPaperSprite* UInputGlyphsAsset::GetGlyph(const FKey& key) const
 {
-	UPaperSprite* sprite = *glyphMap.Find(key);
-	if(sprite->IsValidLowLevelFast())
+	if (glyphMap.Contains(key))
 	{
-		return sprite;
+		UPaperSprite* sprite = glyphMap[key];
+		if(sprite && sprite->IsValidLowLevelFast())
+		{
+			return sprite;
+		}
 	}
 
 	return nullptr;

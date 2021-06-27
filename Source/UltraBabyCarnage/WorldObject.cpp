@@ -1,18 +1,6 @@
 
 #include "WorldObject.h"
 
-UWorldObject::UWorldObject() :
-	UObject()
-{
-	//FWorldDelegates::OnPostWorldCreation.AddUObject(this, &UWorldObject::Init);
-	OnInit();
-}
-
-void UWorldObject::Init(UWorld* world)
-{
-	OnInit();
-}
-
 void UWorldObject::OnInit_Implementation()
 {
 }

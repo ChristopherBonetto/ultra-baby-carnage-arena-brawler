@@ -1,4 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -15,14 +14,6 @@ class ULTRABABYCARNAGE_API UWorldObject :
 	public UObject
 {
 	GENERATED_BODY()
-	
-public:
-
-	UWorldObject();
-
-private:
-
-	void Init(UWorld* world);
 
 protected:
 

@@ -15,7 +15,7 @@ int UUBCInventoryComponent::GetImplementationDepth(UClass* parent, UClass* child
 		depth++;
 	}
 
-	return -1;
+	return depth;
 }
 
 int UUBCInventoryComponent::GetSlotIndexAtBestDepth(UClass* itemClass, int& outDepth) const

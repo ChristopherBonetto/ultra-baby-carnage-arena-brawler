@@ -67,6 +67,12 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	bool AddItem(UUBCConsumableBase* consumable, int& outSlotIndex);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int GetSlotCount(int slotIndex) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int GetSlotCountOfType(TSubclassOf<UUBCConsumableBase> itemClass, int& outSlotIndex) const;
 		
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool GetItemFromSlot(int slotIndex, UUBCConsumableBase*& outConsumable) const;

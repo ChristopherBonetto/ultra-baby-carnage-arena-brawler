@@ -4,7 +4,7 @@
 int UUBCInventoryComponent::GetImplementationDepth(UClass* parent, UClass* child) const
 {
 	int depth = 0;
-	while (child)
+	while (child && child != UObject::StaticClass())
 	{
 		if (child == parent)
 		{
@@ -20,21 +20,26 @@ int UUBCInventoryComponent::GetImplementationDepth(UClass* parent, UClass* child
 
 int UUBCInventoryComponent::GetSlotIndexAtBestDepth(UClass* itemClass, int& outDepth) const
 {
-	int bestDepth = -1;
-	int bestDepthIndex = -1;
-
-	for (int i = 0; i < inventory.Num(); i++)
+	if (inventory.Num() > 0)
 	{
-		int depth = GetImplementationDepth(inventory[i].parentClass, itemClass);
-		if (depth < bestDepth)
+		int bestDepth = GetImplementationDepth(inventory[0].parentClass, itemClass);
+		int bestDepthIndex = 0;
+
+		for (int i = 1; i < inventory.Num(); i++)
 		{
-			bestDepth = depth;
-			bestDepthIndex = i;
+			int depth = GetImplementationDepth(inventory[i].parentClass, itemClass);
+			if (depth < bestDepth)
+			{
+				bestDepth = depth;
+				bestDepthIndex = i;
+			}
 		}
+
+		outDepth = bestDepth;
+		return bestDepthIndex;
 	}
 
-	outDepth = bestDepth;
-	return bestDepthIndex;
+	return -1;
 }
 
 bool UUBCInventoryComponent::AddSlot(TSubclassOf<UUBCConsumableBase> parentClass)
@@ -73,6 +78,27 @@ bool UUBCInventoryComponent::AddItem(UUBCConsumableBase* consumable, int& outSlo
 	}
 
 	return false;
+}
+
+int UUBCInventoryComponent::GetSlotCount(int slotIndex) const
+{
+	if (inventory.IsValidIndex(slotIndex))
+	{
+		return inventory[slotIndex].consumables.Num();
+	}
+
+	return 0;
+}
+
+int UUBCInventoryComponent::GetSlotCountOfType(TSubclassOf<UUBCConsumableBase> itemClass, int& outSlotIndex) const
+{
+	int depth;
+	if ((outSlotIndex = GetSlotIndexAtBestDepth(itemClass, depth)) >= 0)
+	{
+		return GetSlotCount(outSlotIndex);
+	}
+
+	return 0;
 }
 
 bool UUBCInventoryComponent::GetItemFromSlot(int slotIndex, UUBCConsumableBase*& outConsumable) const

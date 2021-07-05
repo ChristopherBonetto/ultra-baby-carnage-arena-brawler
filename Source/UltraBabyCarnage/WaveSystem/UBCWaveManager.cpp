@@ -244,6 +244,11 @@ void AUBCWaveManager::CreateRoundItemList()
 		int last = itemCount - 1;
 		int first = 0;
 
+		int itemsBoughtCount = 0;
+
+		int cheapestCost = 0;
+		int cheapestIndex = last;
+
 		// Retrieves the default item class of the round.
 		int defaultIndex = wave->GetRoundDefaultItemIndex(currentRound);
 		defaultItemClass = FMath::IsWithin(defaultIndex, 0, itemCount) ?
@@ -257,9 +262,17 @@ void AUBCWaveManager::CreateRoundItemList()
 			{
 				int cost = row->cost;
 
+				if (cost < cheapestCost || i == last)
+				{
+					cheapestCost = cost;
+					cheapestIndex = i;
+				}
+
 				// Adds to the item list the class and amount to buy.
-				int amountToBuy = FMath::RandRange(0, roundBudget / cost);
+				int amountToBuy = FMath::RandRange(0, cost > 0 ? roundBudget / cost : roundEnemyCount - itemsBoughtCount);
 				roundItems.Add(TPair<TSubclassOf<AUBCItemBase>, int>(row->weaponClass, amountToBuy));
+
+				itemsBoughtCount += amountToBuy;
 
 				// Deducts the cost from the budget.
 				roundBudget -= cost * amountToBuy;
@@ -272,15 +285,22 @@ void AUBCWaveManager::CreateRoundItemList()
 			}
 		}
 
-		// If there's still budget left, it is all spent on copies of the first item.
-		if (roundBudget > 0)
+		// If there's still budget left, it is all spent on copies of the cheapest item.
+		if (itemsBoughtCount < roundEnemyCount)
 		{
-			FUBCWeaponCost* row = itemTable->FindRow<FUBCWeaponCost>(rowNames[first], contextString);
-			if (row->cost <= roundBudget)
+			FUBCWeaponCost* row = itemTable->FindRow<FUBCWeaponCost>(rowNames[cheapestIndex], contextString);
+			if (row)
 			{
-				int amount = roundBudget / row->cost;
-				roundItems[last].Value += amount;
-				roundBudget -= amount * row->cost;
+				int cost = row->cost;
+				if (cost <= roundBudget)
+				{
+					int amount = cost > 0 ?
+						roundBudget / cost :
+						roundEnemyCount - itemsBoughtCount;
+
+					roundItems[cheapestIndex].Value += amount;
+					roundBudget -= amount * cost;
+				}
 			}
 		}
 	}

@@ -34,6 +34,8 @@ public:
 	DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FItemAdded, int, slotIndex, UUBCConsumableBase*, item);
 	
 	DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FItemRemoved, int, slotIndex, UUBCConsumableBase*, item);
+	
+	DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FItemDiscarded, int, slotIndex, UUBCConsumableBase*, item);
 
 public:
 
@@ -48,6 +50,9 @@ public:
 
 	UPROPERTY(BlueprintCallable, BlueprintAssignable)
 	FItemRemoved itemRemoved;
+
+	UPROPERTY(BlueprintCallable, BlueprintAssignable)
+	FItemDiscarded itemDiscarded;
 
 private:
 
@@ -68,6 +73,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	bool AddItem(UUBCConsumableBase* consumable, int& outSlotIndex);
 
+	UFUNCTION(BlueprintCallable)
+	bool AddItemOfType(TSubclassOf<UUBCConsumableBase> itemClass, UUBCConsumableBase*& outConsumable, int& outSlotIndex);
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int GetSlotCount(int slotIndex) const;
 
@@ -86,10 +94,19 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool RemoveItemOfType(TSubclassOf<UUBCConsumableBase> itemClass, int& outSlotIndex, UUBCConsumableBase*& outConsumable);
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsSlotFull(int slotIndex, int& outSlotSize);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsSlotOfTypeFull(TSubclassOf<UUBCConsumableBase> itemClass, int& outSlotSize, int& outSlotIndex);
+
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
 	void OnItemAdded(int slotIndex, UUBCConsumableBase* item);
 
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
 	void OnItemRemoved(int slotIndex, UUBCConsumableBase* item);
+
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
+	void OnItemDiscarded(int slotIndex, UUBCConsumableBase* item);
 
 };

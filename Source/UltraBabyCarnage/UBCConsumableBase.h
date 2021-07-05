@@ -12,6 +12,11 @@ class ULTRABABYCARNAGE_API UUBCConsumableBase :
 {
 	GENERATED_BODY()
 	
+public:
+
+	UPROPERTY(EditAnywhere)
+	int priority = 0;
+
 protected:
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)

@@ -54,12 +54,32 @@ bool UUBCInventoryComponent::AddSlot(TSubclassOf<UUBCConsumableBase> parentClass
 
 bool UUBCInventoryComponent::AddItemInSlot(int slotIndex, UUBCConsumableBase* consumable)
 {
-	if (slotIndex < inventory.Num())
+	if (inventory.IsValidIndex(slotIndex) && consumable->IsValidLowLevelFast())
 	{
-		auto& arr = inventory[slotIndex];
-		if (arr.consumables.Num() < arr.maxSize)
+		FUBCConsumableArray& slot = inventory[slotIndex];
+		TArray<UUBCConsumableBase*>& consumables = slot.consumables;
+
+		for (int i = 0; i < consumables.Num(); i++)
 		{
-			arr.consumables.Add(consumable);
+			if (consumable->priority > consumables[i]->priority)
+			{
+				consumables.Insert(consumable, i);
+
+				if (consumables.Num() > slot.maxSize)
+				{
+					int lastIndex = consumables.Num() - 1;
+					OnItemDiscarded(slotIndex, consumables[lastIndex]);
+					consumables.RemoveAt(lastIndex);
+				}
+
+				OnItemAdded(slotIndex, consumable);
+				return true;
+			}
+		}
+
+		if (consumables.Num() < slot.maxSize)
+		{
+			consumables.Add(consumable);
 			OnItemAdded(slotIndex, consumable);
 			return true;
 		}
@@ -71,10 +91,20 @@ bool UUBCInventoryComponent::AddItemInSlot(int slotIndex, UUBCConsumableBase* co
 bool UUBCInventoryComponent::AddItem(UUBCConsumableBase* consumable, int& outSlotIndex)
 {
 	int depth;
-	if ((outSlotIndex = GetSlotIndexAtBestDepth(consumable->GetClass(), depth)) >= 0)
+	if (consumable->IsValidLowLevelFast() && (outSlotIndex = GetSlotIndexAtBestDepth(consumable->GetClass(), depth)) >= 0)
 	{
-		AddItemInSlot(outSlotIndex, consumable);
-		return true;
+		return AddItemInSlot(outSlotIndex, consumable);
+	}
+
+	return false;
+}
+
+bool UUBCInventoryComponent::AddItemOfType(TSubclassOf<UUBCConsumableBase> itemClass, UUBCConsumableBase*& outConsumable, int& outSlotIndex)
+{
+	if (itemClass->IsValidLowLevelFast())
+	{
+		outConsumable = NewObject<UUBCConsumableBase>(this, itemClass);
+		return AddItem(outConsumable, outSlotIndex);
 	}
 
 	return false;
@@ -150,6 +180,29 @@ bool UUBCInventoryComponent::RemoveItemOfType(TSubclassOf<UUBCConsumableBase> it
 	return false;
 }
 
+bool UUBCInventoryComponent::IsSlotFull(int slotIndex, int& outSlotSize)
+{
+	if (inventory.IsValidIndex(slotIndex))
+	{
+		FUBCConsumableArray& slot = inventory[slotIndex];
+		outSlotSize = slot.consumables.Num();
+		return outSlotSize >= slot.maxSize;
+	}
+
+	return false;
+}
+
+bool UUBCInventoryComponent::IsSlotOfTypeFull(TSubclassOf<UUBCConsumableBase> itemClass, int& outSlotSize, int& outSlotIndex)
+{
+	int depth;
+	if ((outSlotIndex = GetSlotIndexAtBestDepth(itemClass, depth)) >= 0)
+	{
+		return IsSlotFull(outSlotIndex, outSlotSize);
+	}
+
+	return false;
+}
+
 void UUBCInventoryComponent::OnItemAdded_Implementation(int slotIndex, UUBCConsumableBase* item)
 {
 	itemAdded.Broadcast(slotIndex, item);
@@ -158,4 +211,9 @@ void UUBCInventoryComponent::OnItemAdded_Implementation(int slotIndex, UUBCConsu
 void UUBCInventoryComponent::OnItemRemoved_Implementation(int slotIndex, UUBCConsumableBase* item)
 {
 	itemRemoved.Broadcast(slotIndex, item);
+}
+
+void UUBCInventoryComponent::OnItemDiscarded_Implementation(int slotIndex, UUBCConsumableBase* item)
+{
+	itemDiscarded.Broadcast(slotIndex, item);
 }

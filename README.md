@@ -1,4 +1,4 @@
-<h1 align="center">Ultra Baby Carnage</h1>
+<h1 align="center">💥 Ultra Baby Carnage</h1>
 
 <p align="center">
   <img src="docs/images/ultra-baby-carnage-cover.webp" alt="Ultra Baby Carnage cover artwork" width="100%">
@@ -31,7 +31,7 @@
 
 <p align="center"><sub>Chaining attacks with the Bubble Wand while its crowd-control effect traps enemies in bubbles.</sub></p>
 
-## Project Snapshot
+## 📌 Project Snapshot
 
 | | |
 |---|---|
@@ -43,13 +43,35 @@
 | **Platform** | Windows PC |
 | **Status** | Completed team project; archived portfolio copy |
 
-## Overview
+## 🎮 Overview
 
 *Ultra Baby Carnage* is an academic team project in which the player fights through escalating enemy waves inside a colourful, multi-level playground. Its combat loop revolves around independently equipped hands, improvised weapons, chained attacks, temporary and permanent effects, and environmental interactions.
 
 The project uses a hybrid C++ and Blueprint architecture. Reusable native systems expose gameplay events and data to Blueprint, while Data Assets, Data Tables, curves, Behaviour Trees, animation assets, and UMG widgets support content iteration.
 
-## My Contributions
+## 🕹️ How to Play
+
+Survive escalating enemy waves, earn credits from defeated enemies, and spend them in the shop between rounds. Equip each hand independently, combine attacks, and use weapons, items, and environmental interactions to control the arena.
+
+| Input | Action |
+|---|---|
+| `WASD` | Move |
+| Mouse | Look / aim |
+| Left / Right Mouse Button | Attack with the left / right hand |
+| `Q` / `E` | Equip or throw the left / right-hand item |
+| `Space` | Jump |
+| `Shift` | Dodge |
+| `F` | Interact |
+| `C` | Swap items |
+| `R` | Combine compatible items |
+| `1`–`4` | Use inventory items |
+| `I` | Open or close the shop |
+| `Tab` | Show the wave report |
+| `Esc` | Pause |
+
+Gamepad controls are also supported and are displayed through the in-game interface.
+
+## 👨‍💻 My Contributions
 
 I worked as one of two programmers in a multidisciplinary team. My documented contributions include:
 
@@ -67,7 +89,7 @@ I worked as one of two programmers in a multidisciplinary team. My documented co
 
 The repository preserves the original team development history and identifies later portfolio-migration changes separately. I present the project as collaborative work and do not claim sole authorship.
 
-## Technical Highlights
+## ⚙️ Technical Highlights
 
 ### Dual-hand combat and combo flow
 
@@ -91,7 +113,7 @@ The wider native wave system coordinates round transitions, enemy counts, spawn 
 
 Reusable interaction detection supports doors, distributors, repair stations, turrets, damaging pools, slowing barrels, bounce pads, dash pads, and projectile hazards; several interactions spend points earned during combat.
 
-## Project Features
+## ✨ Project Features
 
 - Independently equipped hands and multi-step weapon combos.
 - Melee, ranged, throwable, consumable, and passive-effect items.
@@ -104,7 +126,7 @@ Reusable interaction detection supports doors, distributors, repair stations, tu
 - Health, inventory, equipment, shop, damage, game-over, settings, tooltip, and pause UI.
 - Animation-driven combat using Montages and dedicated Animation Notifies.
 
-## Technology
+## 🛠️ Technology
 
 - Unreal Engine 4.25
 - C++ and Unreal Engine Blueprints
@@ -114,28 +136,33 @@ Reusable interaction detection supports doors, distributors, repair stations, tu
 - Animation Montages and Animation Notifies
 - Unreal delegates, timers, Blueprint-native events, and actor components
 
-## Media
+## 🎬 Media
 
 - [Unreal Editor gameplay walkthrough](https://drive.google.com/file/d/1qz_VkykGQK51RnuRpyYMp8G0uf4JzD7Y/view)
 - [Gameplay clips and GIFs](https://drive.google.com/drive/folders/1YadlTnKj6fz8xOdq-mVtqjROHWfdYZZ_)
 
-The final repository will feature up to three focused previews: a crowd-combat encounter, a weapon/effect example, and an environmental interaction.
+The README currently features a focused crowd-combat and weapon-effect preview. Additional clips can be added when they materially improve the presentation of a specific system.
 
-## Build and Running the Project
+## 🚀 Build and Running the Project
 
-A portfolio build is being prepared and will be linked here after validation. The archived source project targets Unreal Engine 4.25 on Windows.
+- **Playable build:** download the latest [Windows portfolio build](https://github.com/ChristopherBonetto/ultra-baby-carnage-arena-brawler/releases/latest/download/UltraBabyCarnage-Windows.zip), extract the archive, and run `UltraBabyCarnage.exe`.
+- **Source project:** open `UltraBabyCarnage.uproject` with Unreal Engine 4.25 on Windows. Generated folders are intentionally excluded and will be recreated by the engine.
 
-## Project Context
+## 🧭 Project Context
 
 - **Context:** Academic multidisciplinary team production
 - **Team:** Evil Artichokes, approximately nine people across programming, game design, 2D art, and 3D art
 - **Programming team:** Two programmers
 - **Repository history:** Original team development history preserved; later portfolio migration changes identified separately
 
-## Credits, Ownership and Status
+## 👥 Credits, Ownership and Status
 
 *Ultra Baby Carnage* was created collaboratively by Evil Artichokes. Third-party tools and assets remain the property of their respective authors.
 
 > This repository is shared for portfolio review. It documents my contribution to a collaborative project and does not grant permission to reuse third-party or team-owned assets. Unless stated otherwise, it is not an open-source release.
 
 **Project status:** Completed academic team project; no longer actively maintained.
+
+## 💼 Contact
+
+[LinkedIn — Christopher Bonetto](https://www.linkedin.com/in/christopher-bonetto-547876221)

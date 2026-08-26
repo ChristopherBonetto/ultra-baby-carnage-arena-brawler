@@ -1,10 +1,31 @@
-# Ultra Baby Carnage
+<h1 align="center">Ultra Baby Carnage</h1>
 
-> A third-person wave-based arena brawler built in Unreal Engine 4, combining dual-hand combat, modular items, enemy AI, and data-driven progression inside a chaotic indoor playground.
+<p align="center">
+  <img src="docs/images/ultra-baby-carnage-cover.webp" alt="Ultra Baby Carnage cover artwork" width="100%">
+</p>
 
-<!-- Add the selected full-width combat GIF here before publication. -->
+<p align="center">
+  <strong>A third-person wave-based arena brawler built in Unreal Engine 4.</strong><br>
+  Dual-hand combat, modular items, enemy AI, and data-driven progression inside a chaotic indoor playground.
+</p>
 
-[Watch Gameplay](https://drive.google.com/file/d/1qz_VkykGQK51RnuRpyYMp8G0uf4JzD7Y/view) · [Browse Gameplay Clips](https://drive.google.com/drive/folders/1YadlTnKj6fz8xOdq-mVtqjROHWfdYZZ_) · Build coming soon
+<p align="center">
+  <img src="https://img.shields.io/badge/Unreal_Engine-4.25-0E1128?logo=unrealengine&logoColor=white" alt="Unreal Engine 4.25">
+  <img src="https://img.shields.io/badge/C%2B%2B-Gameplay-00599C?logo=cplusplus&logoColor=white" alt="C++ Gameplay">
+  <img src="https://img.shields.io/badge/Blueprint-Systems-137CBD?logo=unrealengine&logoColor=white" alt="Blueprint Systems">
+  <img src="https://img.shields.io/badge/Role-Gameplay_Programmer-E85D04" alt="Role: Gameplay Programmer">
+  <img src="https://img.shields.io/badge/Project-Team_Project-2A9D8F" alt="Team Project">
+</p>
+
+<p align="center">
+  <a href="https://drive.google.com/file/d/1qz_VkykGQK51RnuRpyYMp8G0uf4JzD7Y/view"><strong>Editor Gameplay (temporary)</strong></a>
+  ·
+  <a href="https://drive.google.com/drive/folders/1YadlTnKj6fz8xOdq-mVtqjROHWfdYZZ_"><strong>Gameplay Clips</strong></a>
+  ·
+  <strong>Windows Build — coming soon</strong>
+</p>
+
+<!-- Add the full-width crowd-combat GIF here when the packaged-build capture is ready. -->
 
 ## Project Snapshot
 

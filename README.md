@@ -22,7 +22,7 @@
   ·
   <a href="https://drive.google.com/drive/folders/1YadlTnKj6fz8xOdq-mVtqjROHWfdYZZ_"><strong>Gameplay Clips</strong></a>
   ·
-  <strong>Windows Build — coming soon</strong>
+  <a href="https://github.com/ChristopherBonetto/ultra-baby-carnage-arena-brawler/releases/latest/download/UltraBabyCarnage-Windows.zip"><strong>Download Windows Build</strong></a>
 </p>
 
 <p align="center">

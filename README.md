@@ -18,7 +18,7 @@
 </p>
 
 <p align="center">
-  <a href="https://drive.google.com/file/d/1qz_VkykGQK51RnuRpyYMp8G0uf4JzD7Y/view"><strong>Editor Gameplay (temporary)</strong></a>
+  <a href="https://youtu.be/2RQbeoQigHs"><strong>Full Gameplay (14:03)</strong></a>
   ·
   <a href="https://drive.google.com/drive/folders/1YadlTnKj6fz8xOdq-mVtqjROHWfdYZZ_"><strong>Gameplay Clips</strong></a>
   ·

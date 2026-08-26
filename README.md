@@ -25,7 +25,11 @@
   <strong>Windows Build — coming soon</strong>
 </p>
 
-<!-- Add the full-width crowd-combat GIF here when the packaged-build capture is ready. -->
+<p align="center">
+  <img src="docs/images/combat-bubble-wand.gif" alt="Player chaining attacks with the Bubble Wand and trapping a group of enemies" width="720">
+</p>
+
+<p align="center"><sub>Chaining attacks with the Bubble Wand while its crowd-control effect traps enemies in bubbles.</sub></p>
 
 ## Project Snapshot
 
